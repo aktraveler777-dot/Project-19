@@ -1,15 +1,129 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101a35">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101a35">
 <title>A little closer — Project 19</title>
 
+<style>
+:root{
+  --night:#101a35;
+  --night2:#1a2747;
+  --paper:#f4e8cd;
+  --ink:#3c3028;
+  --gold:#c7a66b;
+  --muted:#c9c0ad;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;
+  background:radial-gradient(ellipse at top,#28375b 0,#101a35 60%);
+  color:var(--paper);
+  font-family:Georgia,'Times New Roman',serif;
+}
+.wrap{max-width:900px;margin:auto;padding:28px 18px 60px}
+.top{text-align:center;padding:30px 10px 24px}
+.eyebrow{letter-spacing:.25em;text-transform:uppercase;font:11px Arial,sans-serif;color:var(--gold)}
+h1{font-size:clamp(38px,8vw,66px);font-weight:normal;margin:13px 0 8px;font-style:italic}
+.subtitle{color:var(--muted);font-size:17px;line-height:1.6}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:22px auto;max-width:500px}
+
+.countdown{
+  display:flex;justify-content:center;gap:9px;flex-wrap:wrap;
+  margin:18px auto;padding:0;border:0;
+}
+.counter-unit{
+  background:#263451;border:1px solid #7e6c4b;
+  border-radius:9px;padding:12px 14px;min-width:76px;
+}
+.counter-number{font-size:27px;color:#f4e8cd}
+.counter-label{font:10px Arial,sans-serif;color:#d7bb83;letter-spacing:.1em}
+
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:25px}
+.day{
+  min-height:112px;border:1px solid #6d674f;
+  background:#182442cc;border-radius:9px;padding:12px 6px;
+  color:var(--paper);text-align:center;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;gap:8px;
+}
+.day .num{font-size:27px}
+.day small{font:10px Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.day.locked{opacity:.48}
+.day.open{cursor:pointer;background:#f1e3c7;color:var(--ink);border-color:var(--gold);box-shadow:0 5px 20px #0003}
+.day.open small{color:#796344}
+.day.today{outline:2px solid var(--gold);outline-offset:2px}
+.note{text-align:center;color:var(--muted);font:12px/1.7 Arial,sans-serif;margin:24px auto;max-width:540px}
+.entry{
+  display:none;margin:28px auto 0;max-width:650px;
+  background:var(--paper);color:var(--ink);
+  padding:clamp(22px,5vw,42px);border-radius:3px;
+  box-shadow:0 16px 45px #0005;position:relative;
+}
+.entry:before{content:'✦';display:block;text-align:center;color:#a98b54;font-size:22px;margin-bottom:14px}
+.entry h2{text-align:center;font-weight:normal;font-style:italic;font-size:30px;margin:0 0 8px}
+.entry .date{text-align:center;font:10px Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#887653;margin-bottom:25px}
+.entry p{font-size:18px;line-height:1.8;white-space:pre-wrap}
+.entry img{display:block;max-width:100%;max-height:420px;margin:18px auto;border-radius:2px}
+.foot{text-align:center;margin-top:40px;color:#b9b29f;font-size:12px}
+button{font:inherit}
+@media(max-width:520px){
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+  .day{min-height:96px}
+  .day .num{font-size:24px}
+  .counter-unit{min-width:68px;padding:10px}
+  .counter-number{font-size:23px}
+}
+</style>
+</head>
+
+<body>
+<main class="wrap">
+
+<header class="top">
+  <div class="eyebrow">A little closer · Project 19</div>
+  <h1>For the days before your day</h1>
+  <p class="subtitle">
+    One little surprise at a time.<br>
+    Open a date, and see what the day has been keeping for you.
+  </p>
+  <div class="rule"></div>
+  <div class="countdown" id="countdown">
+    <div class="counter-unit">Loading...</div>
+  </div>
+</header>
+
+<section aria-label="November diary calendar">
+  <div class="grid" id="grid"></div>
+</section>
+
+<p class="note">
+  A new page is meant to appear each day.<br>
+  Published surprises will appear here automatically.
+</p>
+
+<article class="entry" id="entry">
+  <h2 id="entryTitle">A little note</h2>
+  <div class="date" id="entryDate"></div>
+  <img id="entryImage" alt="A memory for this day" hidden>
+  <p id="entryMessage"></p>
+</article>
+
+<div class="foot">Made with care, one day at a time ✦</div>
+
+</main>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
 const SUPABASE_URL = 'https://atmrgumbcdoegenrezql.supabase.co';
 const SUPABASE_KEY = 'PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE';
 
-const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const client = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 
 const year = 2026;
 const month = 10;
@@ -17,109 +131,75 @@ const start = 5;
 const end = 19;
 
 const today = new Date();
-today.setHours(0, 0, 0, 0);
+today.setHours(0,0,0,0);
 
 const grid = document.getElementById('grid');
 const entries = {};
 
-async function loadPublishedEntries() {
-  const { data, error } = await client
-    .from('diary_entries')
-    .select('day_date,title,message,style,photo_url,is_published')
-    .eq('is_published', true);
+function makeDateKey(date){
+  return [
+    date.getFullYear(),
+    String(date.getMonth()+1).padStart(2,'0'),
+    String(date.getDate()).padStart(2,'0')
+  ].join('-');
+}
 
-  if (error) {
-    document.getElementById('countdown').textContent =
-      'THE DIARY IS RESTING · PLEASE TRY AGAIN';
-    console.error('Diary loading error:', error.message);
+function updateCountdown(){
+  const target = new Date(2026,10,19,0,0,0).getTime();
+  const remaining = target - Date.now();
+  const counter = document.getElementById('countdown');
+
+  if(remaining <= 0){
+    counter.innerHTML =
+      '<div class="counter-unit">✦ THE SPECIAL DAY HAS ARRIVED ✦</div>';
     return;
   }
 
-  (data || []).forEach(entry => {
-    entries[entry.day_date] = entry;
-  });
+  const days = Math.floor(remaining/86400000);
+  const hours = Math.floor((remaining%86400000)/3600000);
+  const minutes = Math.floor((remaining%3600000)/60000);
+  const seconds = Math.floor((remaining%60000)/1000);
 
-  renderCalendar();
+  const units = [
+    [days,'DAYS'],
+    [hours,'HOURS'],
+    [minutes,'MINUTES'],
+    [seconds,'SECONDS']
+  ];
+
+  counter.innerHTML = units.map(([number,label]) => `
+    <div class="counter-unit">
+      <div class="counter-number">${String(number).padStart(2,'0')}</div>
+      <div class="counter-label">${label}</div>
+    </div>
+  `).join('');
 }
 
-function renderCalendar() {
-  grid.innerHTML = '';
-
-  for (let d = start; d <= end; d++) {
-    const date = new Date(year, month, d);
-    const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    const entry = entries[key];
-
-    const isOpen = date <= today;
-    const button = document.createElement('button');
-
-    button.className =
-      'day ' +
-      (isOpen ? 'open' : 'locked') +
-      (date.getTime() === today.getTime() ? ' today' : '');
-
-    const number = document.createElement('span');
-    number.className = 'num';
-    number.textContent = d;
-
-    const weekday = document.createElement('small');
-    weekday.textContent = date.toLocaleDateString('en-US', {
-      weekday: 'short'
-    });
-
-    const label = document.createElement('small');
-    label.textContent = entry
-      ? '✦ surprise'
-      : isOpen
-        ? 'open page'
-        : '✧ sealed';
-
-    button.append(number, weekday, label);
-    button.disabled = !isOpen;
-
-    button.addEventListener('click', () => {
-      showEntry(date, entry);
-    });
-
-    grid.appendChild(button);
-  }
-
-  const target = new Date(2026, 10, 19);
-  const days = Math.ceil((target - today) / 86400000);
-
-  document.getElementById('countdown').textContent =
-    days > 0
-      ? `${days} DAYS UNTIL NOVEMBER 19`
-      : 'NOVEMBER 19 · THE SPECIAL DAY';
-}
-
-function showEntry(date, entry) {
+function showEntry(date,entry){
   const title = document.getElementById('entryTitle');
   const dateText = document.getElementById('entryDate');
   const message = document.getElementById('entryMessage');
   const image = document.getElementById('entryImage');
 
-  dateText.textContent = date.toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
+  dateText.textContent = date.toLocaleDateString('en-US',{
+    month:'long',day:'numeric',year:'numeric'
   });
 
-  if (!entry) {
+  if(!entry){
     title.textContent = 'This page is waiting';
     message.textContent =
-      'A little surprise has not been added to this date yet.';
+      'No surprise has been added to this date yet.';
     image.hidden = true;
     image.removeAttribute('src');
-  } else {
+  }else{
     title.textContent = entry.title || 'A little note';
     dateText.textContent += ' · ' + (entry.style || 'A little surprise');
     message.textContent = entry.message || '';
 
-    if (entry.photo_url) {
+    if(entry.photo_url){
       image.src = entry.photo_url;
       image.hidden = false;
-    } else {
+    }else{
       image.hidden = true;
       image.removeAttribute('src');
     }
@@ -127,12 +207,77 @@ function showEntry(date, entry) {
 
   const card = document.getElementById('entry');
   card.style.display = 'block';
-  card.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start'
-  });
+  card.scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+function renderCalendar(){
+  grid.innerHTML = '';
+
+  for(let d=start;d<=end;d++){
+    const date = new Date(year,month,d);
+    const key = makeDateKey(date);
+    const isOpen = date <= today;
+    const entry = entries[key];
+
+    const button = document.createElement('button');
+    button.className =
+      'day ' +
+      (isOpen?'open':'locked') +
+      (date.getTime()===today.getTime()?' today':'');
+
+    const number = document.createElement('span');
+    number.className = 'num';
+    number.textContent = d;
+
+    const weekday = document.createElement('small');
+    weekday.textContent = date.toLocaleDateString('en-US',{
+      weekday:'short'
+    });
+
+    const label = document.createElement('small');
+    label.textContent = entry
+      ? '✦ surprise'
+      : isOpen?'open page':'✧ sealed';
+
+    button.append(number,weekday,label);
+    button.disabled = !isOpen;
+
+    button.addEventListener('click',()=>{
+      showEntry(date,entry);
+    });
+
+    grid.appendChild(button);
+  }
+}
+
+async function loadPublishedEntries(){
+  const {data,error} = await client
+    .from('diary_entries')
+    .select('day_date,title,message,style,photo_url,is_published')
+    .eq('is_published',true);
+
+  if(error){
+    console.error('Diary loading error:',error.message);
+    document.getElementById('countdown').textContent =
+      'THE DIARY IS RESTING · PLEASE TRY AGAIN';
+    renderCalendar();
+    return;
+  }
+
+  Object.keys(entries).forEach(key=>delete entries[key]);
+
+  (data||[]).forEach(entry=>{
+    entries[entry.day_date] = entry;
+  });
+
+  renderCalendar();
+}
+
+updateCountdown();
+setInterval(updateCountdown,1000);
 
 loadPublishedEntries();
 </script>
-</body></html>
+
+</body>
+</html>
