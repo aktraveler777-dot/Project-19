@@ -17,8 +17,10 @@
   --muted:#c9c0ad;
 }
 *{box-sizing:border-box}
+
 body{
-  margin:0;min-height:100vh;
+  margin:0;
+  min-height:100vh;
   background:radial-gradient(ellipse at top,#28375b 0,#101a35 60%);
   color:var(--paper);
   font-family:Georgia,'Times New Roman',serif;
@@ -55,36 +57,93 @@ h1{font-size:clamp(38px,8vw,66px);font-weight:normal;margin:13px 0 8px;font-styl
 .day.open small{color:#796344}
 .day.today{outline:2px solid var(--gold);outline-offset:2px}
 .note{text-align:center;color:var(--muted);font:12px/1.7 Arial,sans-serif;margin:24px auto;max-width:540px}
+
 .entry{
-  display:none;margin:28px auto 0;max-width:650px;
-  background:var(--paper);color:var(--ink);
-  padding:clamp(22px,5vw,42px);border-radius:3px;
-  box-shadow:0 16px 45px #0005;position:relative;
+  display:none;
+  margin:28px auto 0;
+  max-width:650px;
+  background:var(--paper);
+  color:var(--ink);
+  padding:clamp(22px,5vw,42px);
+  border-radius:3px;
+  box-shadow:0 16px 45px #0005;
+  position:relative;
+  overflow:hidden;
+  transition:background .4s,border .4s,transform .4s;
 }
-.entry:before{content:'✦';display:block;text-align:center;color:#a98b54;font-size:22px;margin-bottom:14px}
+.entry:before{
+  content:'✦';
+  display:block;
+  text-align:center;
+  color:#a98b54;
+  font-size:22px;
+  margin-bottom:14px;
+}
 .entry h2{text-align:center;font-weight:normal;font-style:italic;font-size:30px;margin:0 0 8px}
 .entry .date{text-align:center;font:10px Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#887653;margin-bottom:25px}
 .entry p{font-size:18px;line-height:1.8;white-space:pre-wrap}
 .entry img{display:block;max-width:100%;max-height:420px;margin:18px auto;border-radius:2px}
+.entry-content{transition:all .8s ease}
 .foot{text-align:center;margin-top:40px;color:#b9b29f;font-size:12px}
 button{font:inherit}
-@media(max-width:520px){
-  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
-  .day{min-height:96px}
-  .day .num{font-size:24px}
-  .counter-unit{min-width:68px;padding:10px}
-  .counter-number{font-size:23px}
+
+/* INTERACTION BUTTON */
+
+.style-action{
+  display:block;
+  margin:15px auto 25px;
+  padding:14px 24px;
+  background:#b88b55;
+  color:#fff8e9;
+  border:2px solid #e2c797;
+  border-radius:6px;
+  font-family:Georgia,serif;
+  font-size:16px;
+  cursor:pointer;
+  box-shadow:0 5px 12px #0003;
+  transition:transform .3s,background .3s;
 }
-/* PROJECT 19 - DAILY STYLE ENGINE */
+.style-action:hover{transform:translateY(-3px);background:#967044}
+.style-action:disabled{opacity:.8;cursor:default}
+
+/* HIDE CONTENT UNTIL THE SURPRISE IS OPENED */
+
+.entry.has-surprise:not(.interaction-open) .entry-content{
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(18px);
+}
+.entry.interaction-open .entry-content{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+  animation:revealContent .9s ease both;
+}
+
+@keyframes revealContent{
+  from{opacity:0;transform:translateY(25px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* 1. HANDWRITTEN LETTER */
 
 .entry.style-handwritten{
   background:#f3e3bd;
   color:#49382b;
   border:1px solid #c6a878;
   box-shadow:5px 8px 20px #0005;
-  transform:rotate(-0.5deg);
+  transform:rotate(-.5deg);
   font-family:"Brush Script MT",cursive;
 }
+.entry.style-handwritten p{
+  font-family:Georgia,serif;
+  line-height:2;
+}
+.entry.style-handwritten .style-action{
+  background:#b88b55;
+}
+
+/* 2. SCRAPBOOK */
 
 .entry.style-scrapbook{
   background:#f8e9d5;
@@ -93,6 +152,22 @@ button{font:inherit}
   border-radius:12px;
   box-shadow:8px 10px 0 #9d7850;
 }
+.entry.style-scrapbook:before{content:'✂ ✦ 📎 ✦'}
+.entry.style-scrapbook .entry-content{
+  padding:14px;
+  background:#fff8e9;
+  border:2px dashed #c49b69;
+  transform-origin:center;
+}
+.entry.style-scrapbook.interaction-open .entry-content{
+  animation:scrapReveal .8s ease both;
+}
+@keyframes scrapReveal{
+  from{opacity:0;transform:rotate(-4deg) scale(.92)}
+  to{opacity:1;transform:rotate(0) scale(1)}
+}
+
+/* 3. POSTCARD */
 
 .entry.style-postcard{
   background:#fff4dc;
@@ -100,6 +175,21 @@ button{font:inherit}
   border:8px double #bd9860;
   border-radius:3px;
 }
+.entry.style-postcard:before{content:'✉ POSTCARD ✉'}
+.entry.style-postcard .entry-content{
+  border:1px dashed #b99b70;
+  padding:16px;
+  background:linear-gradient(90deg,transparent 49.8%,#d5bd99 50%,transparent 50.2%);
+}
+.entry.style-postcard.interaction-open .entry-content{
+  animation:postcardReveal 1s ease both;
+}
+@keyframes postcardReveal{
+  0%{opacity:0;transform:perspective(700px) rotateY(90deg)}
+  100%{opacity:1;transform:perspective(700px) rotateY(0)}
+}
+
+/* 4. MIDNIGHT SECRET */
 
 .entry.style-midnight{
   background:linear-gradient(145deg,#101a35,#28375b);
@@ -107,6 +197,27 @@ button{font:inherit}
   border:1px solid #c7a66b;
   box-shadow:0 0 35px #c7a66b55;
 }
+.entry.style-midnight:before{content:'☾ ✦ THE MIDNIGHT SECRET ✦'}
+.entry.style-midnight .date{color:#d7bb83}
+.entry.style-midnight .entry-content{
+  background:#ffffff08;
+  border:1px solid #c7a66b55;
+  padding:15px;
+  border-radius:8px;
+}
+.entry.style-midnight .style-action{
+  background:#25345b;
+  border-color:#c7a66b;
+}
+.entry.style-midnight.interaction-open .entry-content{
+  animation:secretReveal 1.5s ease both;
+}
+@keyframes secretReveal{
+  from{opacity:0;filter:blur(12px);transform:scale(.96)}
+  to{opacity:1;filter:blur(0);transform:scale(1)}
+}
+
+/* 5. PHOTO BOOTH */
 
 .entry.style-photobooth{
   background:#fff;
@@ -115,6 +226,25 @@ button{font:inherit}
   box-shadow:0 8px 25px #0006;
   border-radius:4px;
 }
+.entry.style-photobooth:before{content:'📸 PHOTO BOOTH'}
+.entry.style-photobooth .entry-content{
+  background:#fff;
+  padding:12px;
+  border:1px solid #ddd;
+}
+.entry.style-photobooth img{
+  border:8px solid white;
+  box-shadow:0 3px 12px #0003;
+}
+.entry.style-photobooth.interaction-open .entry-content{
+  animation:photoReveal .9s ease both;
+}
+@keyframes photoReveal{
+  from{opacity:0;transform:translateY(35px) rotate(-3deg)}
+  to{opacity:1;transform:translateY(0) rotate(0)}
+}
+
+/* 6. BOTANICAL DIARY */
 
 .entry.style-botanical{
   background:#edf0df;
@@ -123,6 +253,20 @@ button{font:inherit}
   border-radius:18px;
   box-shadow:0 8px 25px #0004;
 }
+.entry.style-botanical:before{content:'🌿 ❀ 🌿'}
+.entry.style-botanical .entry-content{
+  border-left:2px solid #8b9c75;
+  padding-left:18px;
+}
+.entry.style-botanical.interaction-open .entry-content{
+  animation:flowerReveal 1.2s ease both;
+}
+@keyframes flowerReveal{
+  from{opacity:0;transform:translateY(20px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* 7. VINTAGE BOOK PAGE */
 
 .entry.style-vintage{
   background:#e8d5ad;
@@ -130,77 +274,30 @@ button{font:inherit}
   border:12px double #96764b;
   box-shadow:0 12px 30px #0005;
 }
-
-.entry.style-handwritten p,
+.entry.style-vintage:before{content:'❧ AN OLD STORY ❧'}
 .entry.style-vintage p{
   font-family:Georgia,serif;
   line-height:2;
 }
-
-.entry.style-midnight .date{
-  color:#d7bb83;
+.entry.style-vintage .entry-content{
+  padding:15px;
+  border-top:1px solid #96764b;
 }
-  /* HANDWRITTEN LETTER INTERACTION */
-
-.envelope-trigger {
-  display: block;
-  margin: 18px auto;
-  padding: 16px 28px;
-  background: #b88b55;
-  color: #fff8e9;
-  border: 2px solid #e2c797;
-  border-radius: 6px;
-  font-family: Georgia, serif;
-  font-size: 17px;
-  cursor: pointer;
-  box-shadow: 0 5px 12px #0003;
-  transition: transform .3s, background .3s;
+.entry.style-vintage.interaction-open .entry-content{
+  animation:bookReveal 1.2s ease both;
+}
+@keyframes bookReveal{
+  from{opacity:0;transform:perspective(800px) rotateX(-18deg)}
+  to{opacity:1;transform:perspective(800px) rotateX(0)}
 }
 
-.entry:not(.style-handwritten) .envelope-trigger {
-  display: none;
-}
-
-.envelope-trigger:hover {
-  transform: translateY(-3px);
-  background: #967044;
-}
-
-.entry.letter-open h2,
-.entry.letter-open p,
-.entry.letter-open img {
-  animation: letterReveal 1s ease both;
-}
-
-@keyframes letterReveal {
-  from {
-    opacity: 0;
-    transform: translateY(18px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-  /* THE SEALED LETTER EFFECT */
-
-.entry.style-handwritten:not(.letter-open) h2,
-.entry.style-handwritten:not(.letter-open) .date,
-.entry.style-handwritten:not(.letter-open) p,
-.entry.style-handwritten:not(.letter-open) img {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(15px);
-}
-
-.entry.style-handwritten.letter-open h2,
-.entry.style-handwritten.letter-open .date,
-.entry.style-handwritten.letter-open p,
-.entry.style-handwritten.letter-open img {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  transition: all 1s ease;
+@media(max-width:520px){
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+  .day{min-height:96px}
+  .day .num{font-size:24px}
+  .counter-unit{min-width:68px;padding:10px}
+  .counter-number{font-size:23px}
+  .entry{padding:22px 16px}
 }
 </style>
 </head>
@@ -231,14 +328,16 @@ button{font:inherit}
 </p>
 
 <article class="entry" id="entry">
-  <button class="envelope-trigger" type="button"
-onclick="this.closest('.entry').classList.add('letter-open'); this.textContent='✉ Letter opened';">
-✉ Open your letter
-</button>
-  <h2 id="entryTitle">A little note</h2>
-  <div class="date" id="entryDate"></div>
-  <img id="entryImage" alt="A memory for this day" hidden>
-  <p id="entryMessage"></p>
+  <button class="style-action" id="styleAction" type="button" hidden>
+    Open your surprise
+  </button>
+
+  <div class="entry-content">
+    <h2 id="entryTitle">A little note</h2>
+    <div class="date" id="entryDate"></div>
+    <img id="entryImage" alt="A memory for this day" hidden>
+    <p id="entryMessage"></p>
+  </div>
 </article>
 
 <div class="foot">Made with care, one day at a time ✦</div>
@@ -266,6 +365,47 @@ today.setHours(0,0,0,0);
 
 const grid = document.getElementById('grid');
 const entries = {};
+
+const card = document.getElementById('entry');
+const actionButton = document.getElementById('styleAction');
+
+const styles = {
+  'Handwritten letter': {
+    className:'style-handwritten',
+    button:'✉ Open your letter',
+    opened:'✉ Letter opened'
+  },
+  'Scrapbook': {
+    className:'style-scrapbook',
+    button:'📒 Open your scrapbook',
+    opened:'📒 Memories revealed'
+  },
+  'Postcard': {
+    className:'style-postcard',
+    button:'💌 Flip your postcard',
+    opened:'💌 Postcard flipped'
+  },
+  'Midnight secret': {
+    className:'style-midnight',
+    button:'🌙 Reveal your secret',
+    opened:'🌙 Secret revealed'
+  },
+  'Photo booth': {
+    className:'style-photobooth',
+    button:'📸 Develop your photos',
+    opened:'📸 Photos developed'
+  },
+  'Botanical diary': {
+    className:'style-botanical',
+    button:'🌿 Reveal your hidden note',
+    opened:'🌿 Note discovered'
+  },
+  'Vintage book page': {
+    className:'style-vintage',
+    button:'📖 Turn the page',
+    opened:'📖 Page turned'
+  }
+};
 
 function makeDateKey(date){
   return [
@@ -307,6 +447,20 @@ function updateCountdown(){
 }
 
 function showEntry(date,entry){
+  card.classList.remove(
+    'style-handwritten',
+    'style-scrapbook',
+    'style-postcard',
+    'style-midnight',
+    'style-photobooth',
+    'style-botanical',
+    'style-vintage',
+    'interaction-open'
+  );
+
+  actionButton.hidden = !entry;
+  actionButton.disabled = false;
+
   const title = document.getElementById('entryTitle');
   const dateText = document.getElementById('entryDate');
   const message = document.getElementById('entryMessage');
@@ -318,10 +472,10 @@ function showEntry(date,entry){
 
   if(!entry){
     title.textContent = 'This page is waiting';
-    message.textContent =
-      'No surprise has been added to this date yet.';
+    message.textContent = 'No surprise has been added to this date yet.';
     image.hidden = true;
     image.removeAttribute('src');
+    card.classList.add('interaction-open');
   }else{
     title.textContent = entry.title || 'A little note';
     dateText.textContent += ' · ' + (entry.style || 'A little surprise');
@@ -334,35 +488,30 @@ function showEntry(date,entry){
       image.hidden = true;
       image.removeAttribute('src');
     }
+
+    const selected = styles[entry.style];
+
+    if(selected){
+      card.classList.add(selected.className);
+      card.classList.add('has-surprise');
+      actionButton.textContent = selected.button;
+    }else{
+      card.classList.add('interaction-open');
+    }
   }
 
-  const card = document.getElementById('entry');
-  card.classList.remove(
-  'style-handwritten',
-  'style-scrapbook',
-  'style-postcard',
-  'style-midnight',
-  'style-photobooth',
-  'style-botanical',
-  'style-vintage'
-);
-
-const styleClasses = {
-  'Handwritten letter': 'style-handwritten',
-  'Scrapbook': 'style-scrapbook',
-  'Postcard': 'style-postcard',
-  'Midnight secret': 'style-midnight',
-  'Photo booth': 'style-photobooth',
-  'Botanical diary': 'style-botanical',
-  'Vintage book page': 'style-vintage'
-};
-
-if (entry && styleClasses[entry.style]) {
-  card.classList.add(styleClasses[entry.style]);
-}
   card.style.display = 'block';
   card.scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+actionButton.addEventListener('click',()=>{
+  card.classList.add('interaction-open');
+  actionButton.textContent =
+    styles[Object.keys(styles).find(
+      name=>card.classList.contains(styles[name].className)
+    )]?.opened || 'Opened';
+  actionButton.disabled = true;
+});
 
 function renderCalendar(){
   grid.innerHTML = '';
@@ -435,3 +584,4 @@ loadPublishedEntries();
 
 </body>
 </html>
+ 
