@@ -87,7 +87,7 @@ h1{font-size:clamp(38px,8vw,66px);font-weight:normal;margin:13px 0 8px;font-styl
 .foot{text-align:center;margin-top:40px;color:#b9b29f;font-size:12px}
 button{font:inherit}
 
-/* INTERACTION BUTTON */
+/* STYLE ACTION */
 
 .style-action{
   display:block;
@@ -106,6 +106,229 @@ button{font:inherit}
 .style-action:hover{transform:translateY(-3px);background:#967044}
 .style-action:disabled{opacity:.8;cursor:default}
 
+/* GIFT BOX EXPERIENCE */
+
+.gift-stage{
+  text-align:center;
+  padding:24px 8px 30px;
+  position:relative;
+}
+.gift-stage[hidden]{display:none}
+.gift-heading{
+  color:#927044;
+  font-size:22px;
+  font-style:italic;
+  margin:0 0 9px;
+}
+.gift-subtitle{
+  color:#806e55;
+  font:12px/1.6 Arial,sans-serif;
+  margin:0 0 24px;
+}
+.gift-button{
+  position:relative;
+  display:block;
+  width:190px;
+  height:175px;
+  margin:0 auto;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  perspective:600px;
+  -webkit-tap-highlight-color:transparent;
+}
+.gift-box{
+  position:absolute;
+  width:150px;
+  height:100px;
+  left:20px;
+  bottom:12px;
+  background:linear-gradient(135deg,#a83f59,#74283e);
+  border:2px solid #d8ad70;
+  border-radius:4px;
+  box-shadow:0 12px 20px #0003;
+}
+.gift-box:before{
+  content:'';
+  position:absolute;
+  left:56px;
+  top:0;
+  width:32px;
+  height:100%;
+  background:linear-gradient(90deg,#d4ad6d,#f4dba5,#c29a5c);
+}
+.gift-box:after{
+  content:'';
+  position:absolute;
+  left:0;
+  top:36px;
+  width:100%;
+  height:25px;
+  background:linear-gradient(180deg,#e5c17e,#bd9250);
+}
+.gift-lid{
+  position:absolute;
+  z-index:2;
+  width:170px;
+  height:35px;
+  left:10px;
+  bottom:105px;
+  background:linear-gradient(135deg,#c85c70,#91354d);
+  border:2px solid #e2c18a;
+  border-radius:5px;
+  transform-origin:12% 90%;
+  transition:transform .8s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 5px 10px #0002;
+}
+.gift-lid:before{
+  content:'';
+  position:absolute;
+  width:30px;
+  height:100%;
+  left:68px;
+  top:0;
+  background:linear-gradient(90deg,#d4ad6d,#f4dba5,#c29a5c);
+}
+.gift-bow{
+  position:absolute;
+  z-index:3;
+  left:72px;
+  bottom:133px;
+  width:46px;
+  height:25px;
+  transition:transform .7s,opacity .5s;
+}
+.gift-bow:before,.gift-bow:after{
+  content:'';
+  position:absolute;
+  width:23px;
+  height:19px;
+  border:5px solid #e8c783;
+  border-radius:50% 50% 0 50%;
+}
+.gift-bow:before{left:0;transform:rotate(25deg)}
+.gift-bow:after{right:0;transform:rotate(65deg) scaleX(-1)}
+.gift-button:not(:disabled):hover{
+  transform:translateY(-4px);
+}
+.gift-button:focus-visible{
+  outline:3px solid #c7a66b;
+  outline-offset:7px;
+  border-radius:10px;
+}
+.gift-button.gift-open .gift-lid{
+  transform:translate(-12px,-48px) rotate(-32deg);
+}
+.gift-button.gift-open .gift-bow{
+  transform:translateY(-35px) scale(.6);
+  opacity:0;
+}
+.gift-button.gift-open .gift-box{
+  animation:giftBounce .55s ease;
+}
+.gift-button:disabled{cursor:default}
+
+.gift-hint{
+  color:#94744d;
+  font:11px Arial,sans-serif;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  margin-top:5px;
+}
+.gift-stage.gift-complete .gift-hint{
+  color:#8c6b42;
+}
+@keyframes giftBounce{
+  0%,100%{transform:translateY(0)}
+  35%{transform:translateY(-12px)}
+  65%{transform:translateY(2px)}
+}
+
+/* CELEBRATION LAYER */
+
+.celebration-layer{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  overflow:hidden;
+  pointer-events:none;
+}
+.celebration-layer:empty{display:none}
+
+.balloon{
+  position:absolute;
+  bottom:-150px;
+  width:35px;
+  height:46px;
+  border-radius:50% 50% 46% 46%;
+  opacity:0;
+  animation:balloonRise var(--duration) ease-in forwards;
+  animation-delay:var(--delay);
+  box-shadow:inset -7px -5px 0 #00000012,inset 6px 5px 0 #ffffff30;
+}
+.balloon:before{
+  content:'';
+  position:absolute;
+  width:7px;
+  height:7px;
+  background:inherit;
+  bottom:-3px;
+  left:14px;
+  transform:rotate(45deg);
+}
+.balloon:after{
+  content:'';
+  position:absolute;
+  width:1px;
+  height:55px;
+  background:#e6d5c2;
+  top:48px;
+  left:17px;
+  opacity:.8;
+}
+.balloon.pink{background:#e99cae}
+.balloon.gold{background:#d7b66f}
+.balloon.cream{background:#f2e4c8}
+.balloon.rose{background:#c8798e}
+.balloon.blue{background:#9aabc9}
+
+.sparkle{
+  position:absolute;
+  bottom:-20px;
+  font-size:var(--size);
+  color:var(--sparkle-color);
+  opacity:0;
+  animation:sparkleRise var(--duration) ease-out forwards;
+  animation-delay:var(--delay);
+}
+.confetti{
+  position:absolute;
+  top:-20px;
+  width:8px;
+  height:13px;
+  background:var(--confetti-color);
+  opacity:0;
+  animation:confettiFall var(--duration) ease-in forwards;
+  animation-delay:var(--delay);
+}
+
+@keyframes balloonRise{
+  0%{transform:translateY(0) rotate(-8deg);opacity:0}
+  10%{opacity:.95}
+  50%{transform:translateY(-55vh) translateX(22px) rotate(10deg)}
+  100%{transform:translateY(-125vh) translateX(-15px) rotate(-10deg);opacity:.8}
+}
+@keyframes sparkleRise{
+  0%{transform:translateY(0) scale(.3) rotate(0);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-75vh) scale(1.5) rotate(180deg);opacity:0}
+}
+@keyframes confettiFall{
+  0%{transform:translateY(0) rotate(0);opacity:0}
+  10%{opacity:1}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:.9}
+}
+
 /* HIDE CONTENT UNTIL THE SURPRISE IS OPENED */
 
 .entry.has-surprise:not(.interaction-open) .entry-content{
@@ -119,7 +342,6 @@ button{font:inherit}
   transform:translateY(0);
   animation:revealContent .9s ease both;
 }
-
 @keyframes revealContent{
   from{opacity:0;transform:translateY(25px)}
   to{opacity:1;transform:translateY(0)}
@@ -128,40 +350,29 @@ button{font:inherit}
 /* 1. HANDWRITTEN LETTER */
 
 .entry.style-handwritten{
-  background:#f3e3bd;
-  color:#49382b;
+  background:#f3e3bd;color:#49382b;
   border:1px solid #c6a878;
   box-shadow:5px 8px 20px #0005;
   transform:rotate(-.5deg);
   font-family:"Brush Script MT",cursive;
 }
-.entry.style-handwritten p{
-  font-family:Georgia,serif;
-  line-height:2;
-}
-.entry.style-handwritten .style-action{
-  background:#b88b55;
-}
+.entry.style-handwritten p{font-family:Georgia,serif;line-height:2}
+.entry.style-handwritten .style-action{background:#b88b55}
 
 /* 2. SCRAPBOOK */
 
 .entry.style-scrapbook{
-  background:#f8e9d5;
-  color:#49382b;
+  background:#f8e9d5;color:#49382b;
   border:8px solid #d4a66b;
   border-radius:12px;
   box-shadow:8px 10px 0 #9d7850;
 }
 .entry.style-scrapbook:before{content:'✂ ✦ 📎 ✦'}
 .entry.style-scrapbook .entry-content{
-  padding:14px;
-  background:#fff8e9;
-  border:2px dashed #c49b69;
+  padding:14px;background:#fff8e9;border:2px dashed #c49b69;
   transform-origin:center;
 }
-.entry.style-scrapbook.interaction-open .entry-content{
-  animation:scrapReveal .8s ease both;
-}
+.entry.style-scrapbook.interaction-open .entry-content{animation:scrapReveal .8s ease both}
 @keyframes scrapReveal{
   from{opacity:0;transform:rotate(-4deg) scale(.92)}
   to{opacity:1;transform:rotate(0) scale(1)}
@@ -170,20 +381,15 @@ button{font:inherit}
 /* 3. POSTCARD */
 
 .entry.style-postcard{
-  background:#fff4dc;
-  color:#39445b;
-  border:8px double #bd9860;
-  border-radius:3px;
+  background:#fff4dc;color:#39445b;
+  border:8px double #bd9860;border-radius:3px;
 }
 .entry.style-postcard:before{content:'✉ POSTCARD ✉'}
 .entry.style-postcard .entry-content{
-  border:1px dashed #b99b70;
-  padding:16px;
+  border:1px dashed #b99b70;padding:16px;
   background:linear-gradient(90deg,transparent 49.8%,#d5bd99 50%,transparent 50.2%);
 }
-.entry.style-postcard.interaction-open .entry-content{
-  animation:postcardReveal 1s ease both;
-}
+.entry.style-postcard.interaction-open .entry-content{animation:postcardReveal 1s ease both}
 @keyframes postcardReveal{
   0%{opacity:0;transform:perspective(700px) rotateY(90deg)}
   100%{opacity:1;transform:perspective(700px) rotateY(0)}
@@ -193,25 +399,19 @@ button{font:inherit}
 
 .entry.style-midnight{
   background:linear-gradient(145deg,#101a35,#28375b);
-  color:#f4e8cd;
-  border:1px solid #c7a66b;
+  color:#f4e8cd;border:1px solid #c7a66b;
   box-shadow:0 0 35px #c7a66b55;
 }
 .entry.style-midnight:before{content:'☾ ✦ THE MIDNIGHT SECRET ✦'}
 .entry.style-midnight .date{color:#d7bb83}
 .entry.style-midnight .entry-content{
-  background:#ffffff08;
-  border:1px solid #c7a66b55;
-  padding:15px;
-  border-radius:8px;
+  background:#ffffff08;border:1px solid #c7a66b55;
+  padding:15px;border-radius:8px;
 }
 .entry.style-midnight .style-action{
-  background:#25345b;
-  border-color:#c7a66b;
+  background:#25345b;border-color:#c7a66b;
 }
-.entry.style-midnight.interaction-open .entry-content{
-  animation:secretReveal 1.5s ease both;
-}
+.entry.style-midnight.interaction-open .entry-content{animation:secretReveal 1.5s ease both}
 @keyframes secretReveal{
   from{opacity:0;filter:blur(12px);transform:scale(.96)}
   to{opacity:1;filter:blur(0);transform:scale(1)}
@@ -220,25 +420,17 @@ button{font:inherit}
 /* 5. PHOTO BOOTH */
 
 .entry.style-photobooth{
-  background:#fff;
-  color:#292929;
-  border:12px solid white;
-  box-shadow:0 8px 25px #0006;
-  border-radius:4px;
+  background:#fff;color:#292929;border:12px solid white;
+  box-shadow:0 8px 25px #0006;border-radius:4px;
 }
 .entry.style-photobooth:before{content:'📸 PHOTO BOOTH'}
 .entry.style-photobooth .entry-content{
-  background:#fff;
-  padding:12px;
-  border:1px solid #ddd;
+  background:#fff;padding:12px;border:1px solid #ddd;
 }
 .entry.style-photobooth img{
-  border:8px solid white;
-  box-shadow:0 3px 12px #0003;
+  border:8px solid white;box-shadow:0 3px 12px #0003;
 }
-.entry.style-photobooth.interaction-open .entry-content{
-  animation:photoReveal .9s ease both;
-}
+.entry.style-photobooth.interaction-open .entry-content{animation:photoReveal .9s ease both}
 @keyframes photoReveal{
   from{opacity:0;transform:translateY(35px) rotate(-3deg)}
   to{opacity:1;transform:translateY(0) rotate(0)}
@@ -247,20 +439,15 @@ button{font:inherit}
 /* 6. BOTANICAL DIARY */
 
 .entry.style-botanical{
-  background:#edf0df;
-  color:#354c38;
-  border:2px solid #8b9c75;
-  border-radius:18px;
+  background:#edf0df;color:#354c38;
+  border:2px solid #8b9c75;border-radius:18px;
   box-shadow:0 8px 25px #0004;
 }
 .entry.style-botanical:before{content:'🌿 ❀ 🌿'}
 .entry.style-botanical .entry-content{
-  border-left:2px solid #8b9c75;
-  padding-left:18px;
+  border-left:2px solid #8b9c75;padding-left:18px;
 }
-.entry.style-botanical.interaction-open .entry-content{
-  animation:flowerReveal 1.2s ease both;
-}
+.entry.style-botanical.interaction-open .entry-content{animation:flowerReveal 1.2s ease both}
 @keyframes flowerReveal{
   from{opacity:0;transform:translateY(20px) scale(.97)}
   to{opacity:1;transform:translateY(0) scale(1)}
@@ -269,23 +456,16 @@ button{font:inherit}
 /* 7. VINTAGE BOOK PAGE */
 
 .entry.style-vintage{
-  background:#e8d5ad;
-  color:#493522;
+  background:#e8d5ad;color:#493522;
   border:12px double #96764b;
   box-shadow:0 12px 30px #0005;
 }
 .entry.style-vintage:before{content:'❧ AN OLD STORY ❧'}
-.entry.style-vintage p{
-  font-family:Georgia,serif;
-  line-height:2;
-}
+.entry.style-vintage p{font-family:Georgia,serif;line-height:2}
 .entry.style-vintage .entry-content{
-  padding:15px;
-  border-top:1px solid #96764b;
+  padding:15px;border-top:1px solid #96764b;
 }
-.entry.style-vintage.interaction-open .entry-content{
-  animation:bookReveal 1.2s ease both;
-}
+.entry.style-vintage.interaction-open .entry-content{animation:bookReveal 1.2s ease both}
 @keyframes bookReveal{
   from{opacity:0;transform:perspective(800px) rotateX(-18deg)}
   to{opacity:1;transform:perspective(800px) rotateX(0)}
@@ -298,11 +478,24 @@ button{font:inherit}
   .counter-unit{min-width:68px;padding:10px}
   .counter-number{font-size:23px}
   .entry{padding:22px 16px}
+  .gift-button{transform:scale(.9)}
+  .gift-button:not(:disabled):hover{transform:scale(.9) translateY(-4px)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+  }
 }
 </style>
 </head>
 
 <body>
+
+<div class="celebration-layer" id="celebrationLayer" aria-hidden="true"></div>
+
 <main class="wrap">
 
 <header class="top">
@@ -328,6 +521,21 @@ button{font:inherit}
 </p>
 
 <article class="entry" id="entry">
+
+  <section class="gift-stage" id="giftStage" hidden>
+    <h2 class="gift-heading">A little something for you</h2>
+    <p class="gift-subtitle">Some surprises are better when opened slowly.</p>
+
+    <button class="gift-button" id="giftButton" type="button"
+      aria-label="Open your gift">
+      <span class="gift-lid"></span>
+      <span class="gift-bow"></span>
+      <span class="gift-box"></span>
+    </button>
+
+    <div class="gift-hint" id="giftHint">Tap the gift to open</div>
+  </section>
+
   <button class="style-action" id="styleAction" type="button" hidden>
     Open your surprise
   </button>
@@ -348,6 +556,8 @@ button{font:inherit}
 
 <script>
 const SUPABASE_URL = 'https://atmrgumbcdoegenrezql.supabase.co';
+
+/* Put your existing sb_publishable_ key here privately. */
 const SUPABASE_KEY = 'sb_publishable_QUxaD1xaSYOgFakhyhJuQQ_ECZaf1nx';
 
 const client = window.supabase.createClient(
@@ -368,6 +578,12 @@ const entries = {};
 
 const card = document.getElementById('entry');
 const actionButton = document.getElementById('styleAction');
+const giftStage = document.getElementById('giftStage');
+const giftButton = document.getElementById('giftButton');
+const giftHint = document.getElementById('giftHint');
+const celebrationLayer = document.getElementById('celebrationLayer');
+
+let revealTimer = null;
 
 const styles = {
   'Handwritten letter': {
@@ -446,7 +662,142 @@ function updateCountdown(){
   `).join('');
 }
 
+/* CREATE THE CELEBRATION */
+
+function launchCelebration(){
+
+  celebrationLayer.innerHTML = '';
+
+  const balloonColors = [
+    'pink','gold','cream','rose','blue',
+    'pink','gold','cream','rose','blue'
+  ];
+
+  balloonColors.forEach((color,index)=>{
+    const balloon = document.createElement('span');
+    balloon.className = 'balloon ' + color;
+
+    balloon.style.left = (5 + Math.random()*88) + '%';
+    balloon.style.setProperty(
+      '--duration',
+      (5.5 + Math.random()*3) + 's'
+    );
+    balloon.style.setProperty(
+      '--delay',
+      (Math.random()*1.1) + 's'
+    );
+
+    celebrationLayer.appendChild(balloon);
+  });
+
+  const sparkleSymbols = ['✦','✧','✨','·','✧','✦'];
+
+  for(let i=0;i<24;i++){
+    const sparkle = document.createElement('span');
+    sparkle.className = 'sparkle';
+    sparkle.textContent =
+      sparkleSymbols[Math.floor(Math.random()*sparkleSymbols.length)];
+
+    sparkle.style.left = (Math.random()*100) + '%';
+    sparkle.style.setProperty(
+      '--size',
+      (12 + Math.random()*17) + 'px'
+    );
+    sparkle.style.setProperty(
+      '--duration',
+      (2.5 + Math.random()*2) + 's'
+    );
+    sparkle.style.setProperty(
+      '--delay',
+      (Math.random()*.8) + 's'
+    );
+    sparkle.style.setProperty(
+      '--sparkle-color',
+      Math.random()>.5?'#e8c783':'#f6e8cf'
+    );
+
+    celebrationLayer.appendChild(sparkle);
+  }
+
+  const confettiColors = [
+    '#d6b16f','#e99cae','#f2e4c8',
+    '#c8798e','#e7c98c','#ffffff'
+  ];
+
+  for(let i=0;i<45;i++){
+    const piece = document.createElement('span');
+    piece.className = 'confetti';
+
+    piece.style.left = (Math.random()*100) + '%';
+    piece.style.setProperty(
+      '--duration',
+      (3.5 + Math.random()*2.5) + 's'
+    );
+    piece.style.setProperty(
+      '--delay',
+      (Math.random()*1.3) + 's'
+    );
+    piece.style.setProperty(
+      '--confetti-color',
+      confettiColors[Math.floor(Math.random()*confettiColors.length)]
+    );
+
+    celebrationLayer.appendChild(piece);
+  }
+
+  window.setTimeout(()=>{
+    celebrationLayer.innerHTML = '';
+  },10000);
+}
+
+/* OPEN THE GIFT BEFORE SHOWING THE DIARY STYLE BUTTON */
+
+giftButton.addEventListener('click',()=>{
+
+  if(giftButton.disabled) return;
+
+  giftButton.disabled = true;
+  giftButton.classList.add('gift-open');
+  giftStage.classList.add('gift-complete');
+
+  giftHint.textContent = 'A little magic, just for you ✦';
+
+  launchCelebration();
+
+  revealTimer = window.setTimeout(()=>{
+    giftStage.hidden = true;
+    actionButton.hidden = false;
+    actionButton.focus();
+  },1400);
+});
+
+/* OPEN THE ACTUAL DIARY ENTRY */
+
+actionButton.addEventListener('click',()=>{
+
+  card.classList.add('interaction-open');
+
+  const selectedName = Object.keys(styles).find(
+    name=>card.classList.contains(styles[name].className)
+  );
+
+  actionButton.textContent =
+    selectedName ? styles[selectedName].opened : 'Opened';
+
+  actionButton.disabled = true;
+});
+
+/* SHOW A SELECTED DATE */
+
 function showEntry(date,entry){
+
+  if(revealTimer !== null){
+    clearTimeout(revealTimer);
+    revealTimer = null;
+  }
+
+  celebrationLayer.innerHTML = '';
+
   card.classList.remove(
     'style-handwritten',
     'style-scrapbook',
@@ -455,10 +806,19 @@ function showEntry(date,entry){
     'style-photobooth',
     'style-botanical',
     'style-vintage',
-    'interaction-open'
+    'interaction-open',
+    'has-surprise'
   );
 
-  actionButton.hidden = !entry;
+  giftStage.hidden = true;
+  giftStage.classList.remove('gift-complete');
+
+  giftButton.disabled = false;
+  giftButton.classList.remove('gift-open');
+
+  giftHint.textContent = 'Tap the gift to open';
+
+  actionButton.hidden = true;
   actionButton.disabled = false;
 
   const title = document.getElementById('entryTitle');
@@ -471,14 +831,23 @@ function showEntry(date,entry){
   });
 
   if(!entry){
+
     title.textContent = 'This page is waiting';
-    message.textContent = 'No surprise has been added to this date yet.';
+    message.textContent =
+      'No surprise has been added to this date yet.';
+
     image.hidden = true;
     image.removeAttribute('src');
+
     card.classList.add('interaction-open');
+
   }else{
+
     title.textContent = entry.title || 'A little note';
-    dateText.textContent += ' · ' + (entry.style || 'A little surprise');
+
+    dateText.textContent +=
+      ' · ' + (entry.style || 'A little surprise');
+
     message.textContent = entry.message || '';
 
     if(entry.photo_url){
@@ -492,11 +861,18 @@ function showEntry(date,entry){
     const selected = styles[entry.style];
 
     if(selected){
+
       card.classList.add(selected.className);
       card.classList.add('has-surprise');
+
       actionButton.textContent = selected.button;
+
+      giftStage.hidden = false;
+
     }else{
+
       card.classList.add('interaction-open');
+
     }
   }
 
@@ -504,25 +880,21 @@ function showEntry(date,entry){
   card.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-actionButton.addEventListener('click',()=>{
-  card.classList.add('interaction-open');
-  actionButton.textContent =
-    styles[Object.keys(styles).find(
-      name=>card.classList.contains(styles[name].className)
-    )]?.opened || 'Opened';
-  actionButton.disabled = true;
-});
+/* CALENDAR */
 
 function renderCalendar(){
+
   grid.innerHTML = '';
 
   for(let d=start;d<=end;d++){
+
     const date = new Date(year,month,d);
     const key = makeDateKey(date);
     const isOpen = date <= today;
     const entry = entries[key];
 
     const button = document.createElement('button');
+
     button.className =
       'day ' +
       (isOpen?'open':'locked') +
@@ -538,6 +910,7 @@ function renderCalendar(){
     });
 
     const label = document.createElement('small');
+
     label.textContent = entry
       ? '✦ surprise'
       : isOpen?'open page':'✧ sealed';
@@ -553,16 +926,22 @@ function renderCalendar(){
   }
 }
 
+/* LOAD PUBLISHED ENTRIES FROM SUPABASE */
+
 async function loadPublishedEntries(){
+
   const {data,error} = await client
     .from('diary_entries')
     .select('day_date,title,message,style,photo_url,is_published')
     .eq('is_published',true);
 
   if(error){
+
     console.error('Diary loading error:',error.message);
+
     document.getElementById('countdown').textContent =
       'THE DIARY IS RESTING · PLEASE TRY AGAIN';
+
     renderCalendar();
     return;
   }
@@ -576,12 +955,14 @@ async function loadPublishedEntries(){
   renderCalendar();
 }
 
+/* START */
+
 updateCountdown();
 setInterval(updateCountdown,1000);
 
 loadPublishedEntries();
+
 </script>
 
 </body>
 </html>
- 
