@@ -182,6 +182,26 @@ button{font:inherit}
     transform: translateY(0);
   }
 }
+  /* THE SEALED LETTER EFFECT */
+
+.entry.style-handwritten:not(.letter-open) h2,
+.entry.style-handwritten:not(.letter-open) .date,
+.entry.style-handwritten:not(.letter-open) p,
+.entry.style-handwritten:not(.letter-open) img {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+}
+
+.entry.style-handwritten.letter-open h2,
+.entry.style-handwritten.letter-open .date,
+.entry.style-handwritten.letter-open p,
+.entry.style-handwritten.letter-open img {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: all 1s ease;
+}
 </style>
 </head>
 
