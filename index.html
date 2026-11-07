@@ -75,6 +75,71 @@ button{font:inherit}
   .counter-unit{min-width:68px;padding:10px}
   .counter-number{font-size:23px}
 }
+/* PROJECT 19 - DAILY STYLE ENGINE */
+
+.entry.style-handwritten{
+  background:#f3e3bd;
+  color:#49382b;
+  border:1px solid #c6a878;
+  box-shadow:5px 8px 20px #0005;
+  transform:rotate(-0.5deg);
+  font-family:"Brush Script MT",cursive;
+}
+
+.entry.style-scrapbook{
+  background:#f8e9d5;
+  color:#49382b;
+  border:8px solid #d4a66b;
+  border-radius:12px;
+  box-shadow:8px 10px 0 #9d7850;
+}
+
+.entry.style-postcard{
+  background:#fff4dc;
+  color:#39445b;
+  border:8px double #bd9860;
+  border-radius:3px;
+}
+
+.entry.style-midnight{
+  background:linear-gradient(145deg,#101a35,#28375b);
+  color:#f4e8cd;
+  border:1px solid #c7a66b;
+  box-shadow:0 0 35px #c7a66b55;
+}
+
+.entry.style-photobooth{
+  background:#fff;
+  color:#292929;
+  border:12px solid white;
+  box-shadow:0 8px 25px #0006;
+  border-radius:4px;
+}
+
+.entry.style-botanical{
+  background:#edf0df;
+  color:#354c38;
+  border:2px solid #8b9c75;
+  border-radius:18px;
+  box-shadow:0 8px 25px #0004;
+}
+
+.entry.style-vintage{
+  background:#e8d5ad;
+  color:#493522;
+  border:12px double #96764b;
+  box-shadow:0 12px 30px #0005;
+}
+
+.entry.style-handwritten p,
+.entry.style-vintage p{
+  font-family:Georgia,serif;
+  line-height:2;
+}
+
+.entry.style-midnight .date{
+  color:#d7bb83;
+}
 </style>
 </head>
 
@@ -206,6 +271,29 @@ function showEntry(date,entry){
   }
 
   const card = document.getElementById('entry');
+  card.classList.remove(
+  'style-handwritten',
+  'style-scrapbook',
+  'style-postcard',
+  'style-midnight',
+  'style-photobooth',
+  'style-botanical',
+  'style-vintage'
+);
+
+const styleClasses = {
+  'Handwritten letter': 'style-handwritten',
+  'Scrapbook': 'style-scrapbook',
+  'Postcard': 'style-postcard',
+  'Midnight secret': 'style-midnight',
+  'Photo booth': 'style-photobooth',
+  'Botanical diary': 'style-botanical',
+  'Vintage book page': 'style-vintage'
+};
+
+if (entry && styleClasses[entry.style]) {
+  card.classList.add(styleClasses[entry.style]);
+}
   card.style.display = 'block';
   card.scrollIntoView({behavior:'smooth',block:'start'});
 }
