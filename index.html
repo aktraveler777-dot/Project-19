@@ -140,6 +140,48 @@ button{font:inherit}
 .entry.style-midnight .date{
   color:#d7bb83;
 }
+  /* HANDWRITTEN LETTER INTERACTION */
+
+.envelope-trigger {
+  display: block;
+  margin: 18px auto;
+  padding: 16px 28px;
+  background: #b88b55;
+  color: #fff8e9;
+  border: 2px solid #e2c797;
+  border-radius: 6px;
+  font-family: Georgia, serif;
+  font-size: 17px;
+  cursor: pointer;
+  box-shadow: 0 5px 12px #0003;
+  transition: transform .3s, background .3s;
+}
+
+.entry:not(.style-handwritten) .envelope-trigger {
+  display: none;
+}
+
+.envelope-trigger:hover {
+  transform: translateY(-3px);
+  background: #967044;
+}
+
+.entry.letter-open h2,
+.entry.letter-open p,
+.entry.letter-open img {
+  animation: letterReveal 1s ease both;
+}
+
+@keyframes letterReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 </style>
 </head>
 
@@ -169,6 +211,10 @@ button{font:inherit}
 </p>
 
 <article class="entry" id="entry">
+  <button class="envelope-trigger" type="button"
+onclick="this.closest('.entry').classList.add('letter-open'); this.textContent='✉ Letter opened';">
+✉ Open your letter
+</button>
   <h2 id="entryTitle">A little note</h2>
   <div class="date" id="entryDate"></div>
   <img id="entryImage" alt="A memory for this day" hidden>
