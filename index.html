@@ -1,8 +1,8 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101a35">
 <title>A little closer — Project 19</title>
@@ -77,6 +77,12 @@ button{font:inherit}
 .open-letter:hover{transform:translateY(-3px);background:#967044}
 .open-letter:focus-visible,.gift-button:focus-visible{outline:3px solid #c7a66b;outline-offset:6px}
 
+#enableNotifications:disabled{opacity:.6;cursor:wait}
+#notificationStatus{
+  text-align:center;color:#d7bb83;font:12px/1.6 Arial,sans-serif;
+  margin:12px auto 0;max-width:340px;
+}
+
 .gift-stage{text-align:center;padding:24px 8px 30px;position:relative}
 .gift-stage[hidden]{display:none}
 .gift-heading{color:#927044;font-size:22px;font-style:italic;margin:0 0 9px}
@@ -129,7 +135,7 @@ button{font:inherit}
 .entry.interaction-open .entry-content{opacity:1;visibility:visible;transform:translateY(0);animation:revealContent .9s ease both}
 @keyframes revealContent{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
 
-/* THE SEVEN THEMES */
+/* SEVEN THEMES */
 
 .entry.style-handwritten{
   background:#f3e3bd;color:#49382b;border:1px solid #c6a878;
@@ -180,22 +186,18 @@ button{font:inherit}
 .entry.style-vintage.interaction-open .entry-content{animation:bookReveal 1.2s ease both}
 @keyframes bookReveal{from{opacity:0;transform:perspective(800px) rotateX(-18deg)}to{opacity:1;transform:perspective(800px) rotateX(0)}}
 
-/* THE EIGHTH THEME: BIRTHDAY EDITION */
+/* BIRTHDAY THEME */
 
 .entry.style-birthday{
   background:linear-gradient(145deg,#fff0d4,#f2d9bd);
   color:#58364a;border:5px double #c49a5c;
-  box-shadow:0 0 35px #e8bd7955;
-  border-radius:12px;
+  box-shadow:0 0 35px #e8bd7955;border-radius:12px;
 }
 .entry.style-birthday:before{content:'✦ A VERY SPECIAL DAY ✦';color:#b47b48}
 .entry.style-birthday .date{color:#a36e46}
 .entry.style-birthday .entry-content{padding:16px;border:1px dashed #bd9362;background:#fff8ed;border-radius:8px}
 .entry.style-birthday.interaction-open .entry-content{animation:birthdayReveal 1.5s ease both}
-@keyframes birthdayReveal{
-  from{opacity:0;transform:scale(.9) translateY(25px)}
-  to{opacity:1;transform:scale(1) translateY(0)}
-}
+@keyframes birthdayReveal{from{opacity:0;transform:scale(.9) translateY(25px)}to{opacity:1;transform:scale(1) translateY(0)}}
 
 /* CELEBRATIONS */
 
@@ -214,12 +216,7 @@ button{font:inherit}
 .balloon:after{content:'';position:absolute;width:1px;height:55px;background:#e6d5c2;top:48px;left:17px;opacity:.8}
 .balloon.pink{background:#e99cae}.balloon.gold{background:#d7b66f}
 .balloon.cream{background:#f2e4c8}.balloon.rose{background:#c8798e}.balloon.blue{background:#9aabc9}
-@keyframes balloonRise{
-  0%{transform:translateY(0) rotate(-8deg);opacity:0}
-  10%{opacity:.95}
-  50%{transform:translateY(-55vh) translateX(22px) rotate(10deg)}
-  100%{transform:translateY(-125vh) translateX(-15px) rotate(-10deg);opacity:.8}
-}
+@keyframes balloonRise{0%{transform:translateY(0) rotate(-8deg);opacity:0}10%{opacity:.95}50%{transform:translateY(-55vh) translateX(22px) rotate(10deg)}100%{transform:translateY(-125vh) translateX(-15px) rotate(-10deg);opacity:.8}}
 
 .confetti{
   position:absolute;top:-20px;width:8px;height:13px;
@@ -227,11 +224,7 @@ button{font:inherit}
   animation:confettiFall var(--duration) ease-in forwards;
   animation-delay:var(--delay);
 }
-@keyframes confettiFall{
-  0%{transform:translateY(0) rotate(0);opacity:0}
-  10%{opacity:1}
-  100%{transform:translateY(110vh) rotate(720deg);opacity:.9}
-}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:0}10%{opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:.9}}
 
 .sparkle{
   position:absolute;bottom:-20px;font-size:var(--size);
@@ -239,70 +232,39 @@ button{font:inherit}
   animation:sparkleRise var(--duration) ease-out forwards;
   animation-delay:var(--delay);
 }
-@keyframes sparkleRise{
-  0%{transform:translateY(0) scale(.3) rotate(0);opacity:0}
-  20%{opacity:1}
-  100%{transform:translateY(-75vh) scale(1.5) rotate(180deg);opacity:0}
-}
+@keyframes sparkleRise{0%{transform:translateY(0) scale(.3) rotate(0);opacity:0}20%{opacity:1}100%{transform:translateY(-75vh) scale(1.5) rotate(180deg);opacity:0}}
 
 .firework{
   width:8px;height:8px;border-radius:50%;background:#f5d58d;
-  box-shadow:0 -35px #f5d58d,25px -25px #e9a8ae,35px 0 #f5d58d,
-  25px 25px #e9a8ae,0 35px #f5d58d,-25px 25px #e9a8ae,
-  -35px 0 #f5d58d,-25px -25px #e9a8ae;
+  box-shadow:0 -35px #f5d58d,25px -25px #e9a8ae,35px 0 #f5d58d,25px 25px #e9a8ae,0 35px #f5d58d,-25px 25px #e9a8ae,-35px 0 #f5d58d,-25px -25px #e9a8ae;
   animation:fireworkBurst 1.3s ease-out forwards;
 }
-@keyframes fireworkBurst{
-  0%{transform:translate(-50%,-50%) scale(.05);opacity:0}
-  25%{opacity:1}
-  100%{transform:translate(-50%,-50%) scale(1.5);opacity:0}
-}
+@keyframes fireworkBurst{0%{transform:translate(-50%,-50%) scale(.05);opacity:0}25%{opacity:1}100%{transform:translate(-50%,-50%) scale(1.5);opacity:0}}
 
 .floating-heart{font-size:27px;animation:heartFloat 4s ease-out forwards}
-@keyframes heartFloat{
-  0%{transform:translateY(30px) rotate(-15deg) scale(.5);opacity:0}
-  15%{opacity:1}
-  100%{transform:translateY(-85vh) rotate(25deg) scale(1.2);opacity:0}
-}
+@keyframes heartFloat{0%{transform:translateY(30px) rotate(-15deg) scale(.5);opacity:0}15%{opacity:1}100%{transform:translateY(-85vh) rotate(25deg) scale(1.2);opacity:0}}
 
 .shooting-star{
-  width:100px;height:2px;
-  background:linear-gradient(90deg,transparent,#fff5c9,transparent);
+  width:100px;height:2px;background:linear-gradient(90deg,transparent,#fff5c9,transparent);
   box-shadow:0 0 12px #ffe6a3;transform:rotate(-35deg);
   animation:shootingStar 1.4s ease-out forwards;
 }
-@keyframes shootingStar{
-  0%{transform:translate(0,0) rotate(-35deg);opacity:0}
-  15%{opacity:1}
-  100%{transform:translate(-180px,140px) rotate(-35deg);opacity:0}
-}
+@keyframes shootingStar{0%{transform:translate(0,0) rotate(-35deg);opacity:0}15%{opacity:1}100%{transform:translate(-180px,140px) rotate(-35deg);opacity:0}}
 
 .photo-flash{position:absolute;inset:0;background:white;animation:cameraFlash .8s ease-out forwards}
 @keyframes cameraFlash{0%{opacity:0}15%{opacity:.95}35%{opacity:0}55%{opacity:.65}100%{opacity:0}}
 .photo-float{font-size:35px;animation:photoFloat 3.5s ease-out forwards}
-@keyframes photoFloat{
-  0%{transform:translateY(30px) rotate(-15deg) scale(.5);opacity:0}
-  20%{opacity:1}
-  100%{transform:translateY(-75vh) rotate(15deg) scale(1.1);opacity:0}
-}
+@keyframes photoFloat{0%{transform:translateY(30px) rotate(-15deg) scale(.5);opacity:0}20%{opacity:1}100%{transform:translateY(-75vh) rotate(15deg) scale(1.1);opacity:0}}
 
 .falling-petal{font-size:25px;animation:petalFall 5s ease-in-out forwards}
-@keyframes petalFall{
-  0%{transform:translateY(-10vh) rotate(0);opacity:0}
-  15%{opacity:1}
-  100%{transform:translateY(110vh) translateX(70px) rotate(500deg);opacity:0}
-}
+@keyframes petalFall{0%{transform:translateY(-10vh) rotate(0);opacity:0}15%{opacity:1}100%{transform:translateY(110vh) translateX(70px) rotate(500deg);opacity:0}}
 
 .falling-page{
   width:23px;height:31px;background:linear-gradient(135deg,#fff0cf,#c9a875);
   border:1px solid #a98b54;border-radius:2px;
   animation:pageFall 4.5s ease-in forwards;
 }
-@keyframes pageFall{
-  0%{transform:translateY(-50px) rotate(0);opacity:0}
-  15%{opacity:1}
-  100%{transform:translateY(110vh) rotate(500deg);opacity:0}
-}
+@keyframes pageFall{0%{transform:translateY(-50px) rotate(0);opacity:0}15%{opacity:1}100%{transform:translateY(110vh) rotate(500deg);opacity:0}}
 
 @media(max-width:520px){
   .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
@@ -322,46 +284,140 @@ button{font:inherit}
   }
 }
 </style>
-  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 
+<!-- ONESIGNAL SDK -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 
 <script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
+window.OneSignalDeferred = window.OneSignalDeferred || [];
 
-  OneSignalDeferred.push(async function (OneSignal) {
+window.OneSignalDeferred.push(async function(OneSignal){
+
+  const button = document.getElementById("enableNotifications");
+  const status = document.getElementById("notificationStatus");
+
+  try{
+
     await OneSignal.init({
-      appId: "b3dc12bc-130f-46fa-b4ac-982375ef5ca1",
-      serviceWorkerPath: "/Project-19/OneSignalSDKWorker.js",
-      serviceWorkerParam: {
-        scope: "/Project-19/"
+      appId:"b3dc12bc-130f-46fa-b4ac-982375ef5ca1",
+      serviceWorkerPath:"/Project-19/OneSignalSDKWorker.js",
+      serviceWorkerParam:{
+        scope:"/Project-19/"
       }
     });
 
-    function attachNotificationButton() {
-      const button = document.getElementById("enableNotifications");
+    console.log("Project 19: OneSignal initialized.");
 
-      if (button) {
-        button.addEventListener("click", async function () {
-          try {
-            await OneSignal.Notifications.requestPermission();
-            console.log("Notification permission:", Notification.permission);
-          } catch (error) {
-            console.error("Notification error:", error);
-          }
-        });
+    if(!button || !status){
+      console.error("Notification interface not found.");
+      return;
+    }
+
+    button.disabled = false;
+    status.textContent = "Ready to connect your phone ✦";
+
+    button.addEventListener("click",async function(){
+
+      button.disabled = true;
+      status.textContent = "Requesting notification permission...";
+
+      try{
+
+        if(!OneSignal.Notifications.isPushSupported()){
+          throw new Error("This browser does not support web push.");
+        }
+
+        if(Notification.permission !== "granted"){
+          await OneSignal.Notifications.requestPermission();
+        }
+
+        if(Notification.permission !== "granted"){
+          status.textContent =
+            "Permission was not granted. Check Chrome notification settings.";
+          return;
+        }
+
+        status.textContent = "Registering your phone with OneSignal...";
+
+        await OneSignal.User.PushSubscription.optIn();
+
+        let subscriptionId = OneSignal.User.PushSubscription.id;
+
+        if(!subscriptionId){
+
+          status.textContent =
+            "Permission granted. Waiting for device registration...";
+
+          subscriptionId = await new Promise(resolve=>{
+
+            let finished = false;
+
+            const finish = value=>{
+              if(finished) return;
+              finished = true;
+              clearTimeout(timeout);
+              OneSignal.User.PushSubscription.removeEventListener(
+                "change",listener
+              );
+              resolve(value);
+            };
+
+            const listener = change=>{
+              if(change.current && change.current.id){
+                finish(change.current.id);
+              }
+            };
+
+            const timeout = setTimeout(()=>{
+              finish(OneSignal.User.PushSubscription.id || null);
+            },10000);
+
+            OneSignal.User.PushSubscription.addEventListener(
+              "change",listener
+            );
+
+            if(OneSignal.User.PushSubscription.id){
+              finish(OneSignal.User.PushSubscription.id);
+            }
+          });
+        }
+
+        if(subscriptionId){
+          status.textContent = "Your phone is connected successfully! ✦";
+          console.log("OneSignal subscription ID:",subscriptionId);
+        }else{
+          status.textContent =
+            "Permission granted, but registration is still pending. Refresh and check again.";
+          console.log("OneSignal subscription ID is not available yet.");
+        }
+
+      }catch(error){
+
+        console.error("OneSignal subscription error:",error);
+
+        status.textContent =
+          "Connection failed: " + (error.message || "Please try again.");
+
+      }finally{
+        button.disabled = false;
       }
+
+    });
+
+  }catch(error){
+
+    console.error("OneSignal initialization failed:",error);
+
+    if(status){
+      status.textContent =
+        "OneSignal could not initialize. Check the service worker and app configuration.";
     }
 
-    if (document.readyState === "loading") {
-      document.addEventListener(
-        "DOMContentLoaded",
-        attachNotificationButton,
-        { once: true }
-      );
-    } else {
-      attachNotificationButton();
+    if(button){
+      button.disabled = true;
     }
-  });
+  }
+});
 </script>
 
 </head>
@@ -374,31 +430,38 @@ button{font:inherit}
 
 <header class="top">
   <div class="eyebrow">A little closer · Project 19</div>
+
   <h1>For the days before your day</h1>
+
   <p class="subtitle">
     Seven little surprises.<br>
     One beautiful birthday.<br>
     A little closer, every day.
   </p>
+
   <div class="rule"></div>
 
   <div class="countdown" id="countdown">
     <div class="counter-unit">Loading...</div>
   </div>
-  
-<button id="enableNotifications" type="button" style="
-  display:block;
-  margin:20px auto;
-  padding:12px 20px;
-  background:#b88b55;
-  color:#fff8e9;
-  border:1px solid #e2c797;
-  border-radius:6px;
-  font:15px Georgia,serif;
-  cursor:pointer;
-">
-  ✦ Enable Surprise Notifications
-</button>
+
+  <button id="enableNotifications" type="button" disabled style="
+    display:block;
+    margin:20px auto;
+    padding:12px 20px;
+    background:#b88b55;
+    color:#fff8e9;
+    border:1px solid #e2c797;
+    border-radius:6px;
+    font:15px Georgia,serif;
+    cursor:pointer;
+  ">
+    ✦ Enable Surprise Notifications
+  </button>
+
+  <p id="notificationStatus">
+    Connecting to notification service...
+  </p>
 </header>
 
 <section aria-label="November birthday countdown calendar">
@@ -418,8 +481,12 @@ button{font:inherit}
   </button>
 
   <section class="gift-stage" id="giftStage" hidden>
+
     <h2 class="gift-heading">A little something for you</h2>
-    <p class="gift-subtitle">Some surprises are better when opened slowly.</p>
+
+    <p class="gift-subtitle">
+      Some surprises are better when opened slowly.
+    </p>
 
     <button class="gift-button" id="giftButton" type="button" aria-label="Open your gift">
       <span class="gift-lid"></span>
@@ -427,7 +494,10 @@ button{font:inherit}
       <span class="gift-box"></span>
     </button>
 
-    <div class="gift-hint" id="giftHint">Tap the gift to open</div>
+    <div class="gift-hint" id="giftHint">
+      Tap the gift to open
+    </div>
+
   </section>
 
   <div class="entry-content">
@@ -446,109 +516,127 @@ button{font:inherit}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = 'https://atmrgumbcdoegenrezql.supabase.co';
+/* SUPABASE CONFIGURATION */
 
-/* YOUR EXISTING PUBLIC PUBLISHABLE KEY */
-const SUPABASE_KEY = 'sb_publishable_QUxaD1xaSYOgFakhyhJuQQ_ECZaf1nx';
+const SUPABASE_URL =
+  "https://atmrgumbcdoegenrezql.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_QUxaD1xaSYOgFakhyhJuQQ_ECZaf1nx";
 
 const client = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
-/* PROJECT 19 BIRTHDAY SCHEDULE */
+/* PROJECT 19 SCHEDULE */
 
 const year = 2026;
-const month = 10; // November (JavaScript months start at zero)
+const month = 10;
 const start = 12;
 const end = 19;
 
 const schedule = {
+
   12:{
-    label:'Handwritten',
-    style:'style-handwritten',
-    celebration:'fireworks',
+    label:"Handwritten",
+    style:"style-handwritten",
+    celebration:"fireworks",
     birthday:false
   },
+
   13:{
-    label:'Scrapbook',
-    style:'style-scrapbook',
-    celebration:'balloons',
+    label:"Scrapbook",
+    style:"style-scrapbook",
+    celebration:"balloons",
     birthday:false
   },
+
   14:{
-    label:'Postcard',
-    style:'style-postcard',
-    celebration:'postcard',
+    label:"Postcard",
+    style:"style-postcard",
+    celebration:"postcard",
     birthday:false
   },
+
   15:{
-    label:'Midnight Secret',
-    style:'style-midnight',
-    celebration:'midnight',
+    label:"Midnight Secret",
+    style:"style-midnight",
+    celebration:"midnight",
     birthday:false
   },
+
   16:{
-    label:'Photo Booth',
-    style:'style-photobooth',
-    celebration:'photobooth',
+    label:"Photo Booth",
+    style:"style-photobooth",
+    celebration:"photobooth",
     birthday:false
   },
+
   17:{
-    label:'Botanical',
-    style:'style-botanical',
-    celebration:'botanical',
+    label:"Botanical",
+    style:"style-botanical",
+    celebration:"botanical",
     birthday:false
   },
+
   18:{
-    label:'Vintage Book',
-    style:'style-vintage',
-    celebration:'vintage',
+    label:"Vintage Book",
+    style:"style-vintage",
+    celebration:"vintage",
     birthday:false
   },
+
   19:{
-    label:'Birthday Edition',
-    style:'style-birthday',
-    celebration:'birthday',
+    label:"Birthday Edition",
+    style:"style-birthday",
+    celebration:"birthday",
     birthday:true
   }
+
 };
 
-const today = new Date();
-today.setHours(0,0,0,0);
-
-const grid = document.getElementById('grid');
+const grid = document.getElementById("grid");
 const entries = {};
 
-const card = document.getElementById('entry');
-const openLetter = document.getElementById('openLetter');
-const giftStage = document.getElementById('giftStage');
-const giftButton = document.getElementById('giftButton');
-const giftHint = document.getElementById('giftHint');
-const celebrationLayer = document.getElementById('celebrationLayer');
+const card = document.getElementById("entry");
+const openLetter = document.getElementById("openLetter");
+const giftStage = document.getElementById("giftStage");
+const giftButton = document.getElementById("giftButton");
+const giftHint = document.getElementById("giftHint");
+const celebrationLayer = document.getElementById("celebrationLayer");
 
 let revealTimer = null;
 let celebrationTimer = null;
 
+/* DATE KEY */
+
 function makeDateKey(date){
+
   return [
     date.getFullYear(),
-    String(date.getMonth()+1).padStart(2,'0'),
-    String(date.getDate()).padStart(2,'0')
-  ].join('-');
+    String(date.getMonth()+1).padStart(2,"0"),
+    String(date.getDate()).padStart(2,"0")
+  ].join("-");
+
 }
 
-/* COUNTDOWN TO HER BIRTHDAY */
+/* COUNTDOWN */
 
 function updateCountdown(){
 
-  const target = new Date(2026,10,19,0,0,0).getTime();
+  const target =
+    new Date(2026,10,19,0,0,0).getTime();
+
   const remaining = target - Date.now();
-  const counter = document.getElementById('countdown');
+
+  const counter = document.getElementById("countdown");
 
   if(remaining <= 0){
+
     counter.innerHTML =
       '<div class="counter-unit">✦ THE SPECIAL DAY HAS ARRIVED ✦</div>';
+
     return;
   }
 
@@ -558,104 +646,143 @@ function updateCountdown(){
   const seconds = Math.floor((remaining%60000)/1000);
 
   const units = [
-    [days,'DAYS'],
-    [hours,'HOURS'],
-    [minutes,'MINUTES'],
-    [seconds,'SECONDS']
+    [days,"DAYS"],
+    [hours,"HOURS"],
+    [minutes,"MINUTES"],
+    [seconds,"SECONDS"]
   ];
 
-  counter.innerHTML = units.map(([number,label]) => `
+  counter.innerHTML = units.map(([number,label])=>`
     <div class="counter-unit">
-      <div class="counter-number">${String(number).padStart(2,'0')}</div>
+      <div class="counter-number">${String(number).padStart(2,"0")}</div>
       <div class="counter-label">${label}</div>
     </div>
-  `).join('');
+  `).join("");
+
 }
 
 /* CELEBRATION HELPERS */
 
 function addEffect(className,text,left,top,duration){
 
-  const element = document.createElement('span');
-  element.className = 'effect-piece ' + className;
-  element.textContent = text || '';
+  const element = document.createElement("span");
 
-  if(left !== null) element.style.left = left + '%';
-  if(top !== null) element.style.top = top + '%';
+  element.className = "effect-piece " + className;
+  element.textContent = text || "";
 
-  if(duration) element.style.animationDuration = duration + 's';
+  if(left !== null) element.style.left = left + "%";
+  if(top !== null) element.style.top = top + "%";
+
+  if(duration){
+    element.style.animationDuration = duration + "s";
+  }
 
   celebrationLayer.appendChild(element);
+
   return element;
 }
 
 function addConfetti(amount){
 
   const colors = [
-    '#d6b16f','#e99cae','#f2e4c8',
-    '#c8798e','#e7c98c','#ffffff'
+    "#d6b16f","#e99cae","#f2e4c8",
+    "#c8798e","#e7c98c","#ffffff"
   ];
 
   for(let i=0;i<amount;i++){
 
-    const piece = document.createElement('span');
-    piece.className = 'confetti';
-    piece.style.left = Math.random()*100 + '%';
-    piece.style.setProperty('--duration',(3+Math.random()*2)+'s');
-    piece.style.setProperty('--delay',(Math.random()*.8)+'s');
+    const piece = document.createElement("span");
+
+    piece.className = "confetti";
+    piece.style.left = Math.random()*100 + "%";
+
     piece.style.setProperty(
-      '--confetti-color',
+      "--duration",(3+Math.random()*2)+"s"
+    );
+
+    piece.style.setProperty(
+      "--delay",(Math.random()*.8)+"s"
+    );
+
+    piece.style.setProperty(
+      "--confetti-color",
       colors[Math.floor(Math.random()*colors.length)]
     );
 
     celebrationLayer.appendChild(piece);
   }
+
 }
 
 function addSparkles(amount){
 
-  const symbols = ['✦','✧','✨','·'];
+  const symbols = ["✦","✧","✨","·"];
 
   for(let i=0;i<amount;i++){
 
-    const sparkle = document.createElement('span');
-    sparkle.className = 'sparkle';
-    sparkle.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+    const sparkle = document.createElement("span");
 
-    sparkle.style.left = Math.random()*100 + '%';
-    sparkle.style.setProperty('--size',(12+Math.random()*18)+'px');
-    sparkle.style.setProperty('--duration',(2.5+Math.random()*2)+'s');
-    sparkle.style.setProperty('--delay',(Math.random()*.8)+'s');
+    sparkle.className = "sparkle";
+
+    sparkle.textContent =
+      symbols[Math.floor(Math.random()*symbols.length)];
+
+    sparkle.style.left = Math.random()*100 + "%";
+
     sparkle.style.setProperty(
-      '--sparkle-color',
-      Math.random()>.5?'#e8c783':'#f6e8cf'
+      "--size",(12+Math.random()*18)+"px"
+    );
+
+    sparkle.style.setProperty(
+      "--duration",(2.5+Math.random()*2)+"s"
+    );
+
+    sparkle.style.setProperty(
+      "--delay",(Math.random()*.8)+"s"
+    );
+
+    sparkle.style.setProperty(
+      "--sparkle-color",
+      Math.random()>.5?"#e8c783":"#f6e8cf"
     );
 
     celebrationLayer.appendChild(sparkle);
   }
+
 }
 
 function addBalloons(amount){
 
-  const colors = ['pink','gold','cream','rose','blue'];
+  const colors = ["pink","gold","cream","rose","blue"];
 
   for(let i=0;i<amount;i++){
 
-    const balloon = document.createElement('span');
-    balloon.className = 'balloon ' + colors[i%colors.length];
-    balloon.style.left = (5+Math.random()*88)+'%';
-    balloon.style.setProperty('--duration',(5+Math.random()*3)+'s');
-    balloon.style.setProperty('--delay',(Math.random()*.8)+'s');
+    const balloon = document.createElement("span");
+
+    balloon.className =
+      "balloon " + colors[i%colors.length];
+
+    balloon.style.left =
+      (5+Math.random()*88)+"%";
+
+    balloon.style.setProperty(
+      "--duration",(5+Math.random()*3)+"s"
+    );
+
+    balloon.style.setProperty(
+      "--delay",(Math.random()*.8)+"s"
+    );
 
     celebrationLayer.appendChild(balloon);
   }
+
 }
 
-/* ALL EIGHT CELEBRATIONS */
+/* EIGHT CELEBRATIONS */
 
 function launchCelebration(celebration){
 
-  celebrationLayer.innerHTML = '';
+  celebrationLayer.innerHTML = "";
 
   if(celebrationTimer){
     clearTimeout(celebrationTimer);
@@ -663,131 +790,138 @@ function launchCelebration(celebration){
 
   switch(celebration){
 
-    case 'fireworks':
+    case "fireworks":
 
       for(let i=0;i<9;i++){
+
         const firework = addEffect(
-          'firework','',
+          "firework","",
           12+Math.random()*76,
           15+Math.random()*65,
           1.3
         );
-        firework.style.animationDelay = (Math.random()*1.8)+'s';
+
+        firework.style.animationDelay =
+          (Math.random()*1.8)+"s";
       }
 
       addSparkles(35);
       break;
 
-    case 'balloons':
+    case "balloons":
 
       addBalloons(16);
       addConfetti(65);
       addSparkles(15);
       break;
 
-    case 'postcard':
+    case "postcard":
 
       for(let i=0;i<18;i++){
 
-        const symbols = ['💌','💗','♡','✉','💕'];
+        const symbols = ["💌","💗","♡","✉","💕"];
 
         const piece = addEffect(
-          'floating-heart',
+          "floating-heart",
           symbols[Math.floor(Math.random()*symbols.length)],
           Math.random()*95,
           65+Math.random()*30,
           3+Math.random()*2
         );
 
-        piece.style.animationDelay = (Math.random()*1.5)+'s';
+        piece.style.animationDelay =
+          (Math.random()*1.5)+"s";
       }
 
       addConfetti(25);
       break;
 
-    case 'midnight':
+    case "midnight":
 
       for(let i=0;i<14;i++){
 
         const star = addEffect(
-          'shooting-star','',
+          "shooting-star","",
           20+Math.random()*80,
           10+Math.random()*60,
           1.4
         );
 
-        star.style.animationDelay = (Math.random()*2)+'s';
+        star.style.animationDelay =
+          (Math.random()*2)+"s";
       }
 
       addSparkles(55);
       break;
 
-    case 'photobooth':
+    case "photobooth":
 
       for(let i=0;i<5;i++){
 
         const flash = addEffect(
-          'photo-flash','',
+          "photo-flash","",
           null,null,.8
         );
 
-        flash.style.animationDelay = (i*.35)+'s';
+        flash.style.animationDelay =
+          (i*.35)+"s";
       }
 
       for(let i=0;i<16;i++){
 
         const photo = addEffect(
-          'photo-float','📸',
+          "photo-float","📸",
           Math.random()*95,
           65+Math.random()*25,
           3.5
         );
 
-        photo.style.animationDelay = (Math.random()*1.5)+'s';
+        photo.style.animationDelay =
+          (Math.random()*1.5)+"s";
       }
 
       addConfetti(35);
       break;
 
-    case 'botanical':
+    case "botanical":
 
       for(let i=0;i<30;i++){
 
-        const symbols = ['🌸','🌼','🌺','🍃','🦋'];
+        const symbols = ["🌸","🌼","🌺","🍃","🦋"];
 
         const petal = addEffect(
-          'falling-petal',
+          "falling-petal",
           symbols[Math.floor(Math.random()*symbols.length)],
           Math.random()*100,
           -10,
           4+Math.random()*2
         );
 
-        petal.style.animationDelay = (Math.random()*2)+'s';
+        petal.style.animationDelay =
+          (Math.random()*2)+"s";
       }
 
       break;
 
-    case 'vintage':
+    case "vintage":
 
       for(let i=0;i<20;i++){
 
         const page = addEffect(
-          'falling-page','',
+          "falling-page","",
           Math.random()*100,
           -10,
           4+Math.random()*2
         );
 
-        page.style.animationDelay = (Math.random()*2)+'s';
+        page.style.animationDelay =
+          (Math.random()*2)+"s";
       }
 
       addSparkles(45);
       break;
 
-    /* EIGHTH CELEBRATION: BIRTHDAY */
-
-    case 'birthday':
+    case "birthday":
 
       addBalloons(25);
       addConfetti(100);
@@ -796,27 +930,31 @@ function launchCelebration(celebration){
       for(let i=0;i<12;i++){
 
         const firework = addEffect(
-          'firework','',
+          "firework","",
           10+Math.random()*80,
           12+Math.random()*65,
           1.5
         );
 
-        firework.style.animationDelay = (Math.random()*2)+'s';
+        firework.style.animationDelay =
+          (Math.random()*2)+"s";
       }
 
       break;
   }
 
   celebrationTimer = window.setTimeout(()=>{
-    celebrationLayer.innerHTML = '';
+
+    celebrationLayer.innerHTML = "";
     celebrationTimer = null;
+
   },10000);
+
 }
 
 /* FIRST TAP: OPEN LETTER */
 
-openLetter.addEventListener('click',()=>{
+openLetter.addEventListener("click",()=>{
 
   if(openLetter.disabled) return;
 
@@ -826,21 +964,24 @@ openLetter.addEventListener('click',()=>{
   giftButton.focus();
 
   giftStage.scrollIntoView({
-    behavior:'smooth',
-    block:'center'
+    behavior:"smooth",
+    block:"center"
   });
+
 });
 
-/* SECOND TAP: OPEN GIFT AND REVEAL */
+/* SECOND TAP: OPEN GIFT */
 
-giftButton.addEventListener('click',()=>{
+giftButton.addEventListener("click",()=>{
 
   if(giftButton.disabled) return;
 
   giftButton.disabled = true;
-  giftButton.classList.add('gift-open');
 
-  giftHint.textContent = 'A little magic, just for you ✦';
+  giftButton.classList.add("gift-open");
+
+  giftHint.textContent =
+    "A little magic, just for you ✦";
 
   const selectedName = Object.keys(schedule).find(day=>
     card.dataset.scheduledDay === day
@@ -848,26 +989,28 @@ giftButton.addEventListener('click',()=>{
 
   const celebration = selectedName
     ? schedule[selectedName].celebration
-    : 'birthday';
+    : "birthday";
 
   launchCelebration(celebration);
 
   revealTimer = window.setTimeout(()=>{
 
     giftStage.hidden = true;
-    card.classList.add('interaction-open');
+
+    card.classList.add("interaction-open");
 
     revealTimer = null;
 
     card.scrollIntoView({
-      behavior:'smooth',
-      block:'start'
+      behavior:"smooth",
+      block:"start"
     });
 
   },1800);
+
 });
 
-/* SHOW A SELECTED DATE */
+/* SHOW SELECTED DATE */
 
 function showEntry(date,entry){
 
@@ -881,69 +1024,72 @@ function showEntry(date,entry){
     celebrationTimer = null;
   }
 
-  celebrationLayer.innerHTML = '';
+  celebrationLayer.innerHTML = "";
 
   card.classList.remove(
-    'style-handwritten',
-    'style-scrapbook',
-    'style-postcard',
-    'style-midnight',
-    'style-photobooth',
-    'style-botanical',
-    'style-vintage',
-    'style-birthday',
-    'interaction-open',
-    'has-surprise'
+    "style-handwritten",
+    "style-scrapbook",
+    "style-postcard",
+    "style-midnight",
+    "style-photobooth",
+    "style-botanical",
+    "style-vintage",
+    "style-birthday",
+    "interaction-open",
+    "has-surprise"
   );
 
   giftStage.hidden = true;
+
   giftButton.disabled = false;
-  giftButton.classList.remove('gift-open');
-  giftHint.textContent = 'Tap the gift to open';
+  giftButton.classList.remove("gift-open");
+
+  giftHint.textContent = "Tap the gift to open";
 
   openLetter.hidden = true;
   openLetter.disabled = false;
 
-  const title = document.getElementById('entryTitle');
-  const dateText = document.getElementById('entryDate');
-  const message = document.getElementById('entryMessage');
-  const image = document.getElementById('entryImage');
+  const title = document.getElementById("entryTitle");
+  const dateText = document.getElementById("entryDate");
+  const message = document.getElementById("entryMessage");
+  const image = document.getElementById("entryImage");
 
   const day = schedule[date.getDate()];
+
   const isBirthday = day.birthday;
 
   card.dataset.scheduledDay = String(date.getDate());
 
-  dateText.textContent = date.toLocaleDateString('en-US',{
-    month:'long',
-    day:'numeric',
-    year:'numeric'
+  dateText.textContent = date.toLocaleDateString("en-US",{
+    month:"long",
+    day:"numeric",
+    year:"numeric"
   });
 
   if(!entry){
 
     title.textContent = isBirthday
-      ? 'The Birthday Page'
-      : 'This page is waiting';
+      ? "The Birthday Page"
+      : "This page is waiting";
 
     message.textContent = isBirthday
-      ? 'A special birthday surprise is being prepared.'
-      : 'No surprise has been added to this date yet.';
+      ? "A special birthday surprise is being prepared."
+      : "No surprise has been added to this date yet.";
 
     image.hidden = true;
-    image.removeAttribute('src');
+    image.removeAttribute("src");
 
-    card.classList.add('interaction-open');
+    card.classList.add("interaction-open");
 
   }else{
 
     title.textContent = entry.title || (
-      isBirthday ? 'Happy Birthday!' : 'A little note'
+      isBirthday ? "Happy Birthday!" : "A little note"
     );
 
-    dateText.textContent += ' · ' + day.label;
+    dateText.textContent += " · " + day.label;
 
-    message.textContent = entry.message || '';
+    message.textContent = entry.message || "";
 
     if(entry.photo_url){
 
@@ -953,76 +1099,87 @@ function showEntry(date,entry){
     }else{
 
       image.hidden = true;
-      image.removeAttribute('src');
+      image.removeAttribute("src");
+
     }
 
-    /* DATE CONTROLS THE THEME */
-
     card.classList.add(day.style);
-    card.classList.add('has-surprise');
+    card.classList.add("has-surprise");
 
     openLetter.hidden = false;
+
   }
 
-  card.style.display = 'block';
+  card.style.display = "block";
 
   card.scrollIntoView({
-    behavior:'smooth',
-    block:'start'
+    behavior:"smooth",
+    block:"start"
   });
+
 }
 
-/* CALENDAR: NOVEMBER 12 TO 19 */
+/* CALENDAR */
 
 function renderCalendar(){
 
-  grid.innerHTML = '';
+  grid.innerHTML = "";
 
   const currentDate = new Date();
+
   currentDate.setHours(0,0,0,0);
 
   for(let d=start;d<=end;d++){
 
     const date = new Date(year,month,d);
+
     const key = makeDateKey(date);
+
     const day = schedule[d];
+
     const isOpen = date <= currentDate;
+
     const entry = entries[key];
 
-    const button = document.createElement('button');
+    const button = document.createElement("button");
 
     button.className =
-      'day ' +
-      (isOpen?'open':'locked') +
-      (date.getTime()===currentDate.getTime()?' today':'') +
-      (day.birthday?' birthday':'');
+      "day " +
+      (isOpen?"open":"locked") +
+      (date.getTime()===currentDate.getTime()?" today":"") +
+      (day.birthday?" birthday":"");
 
-    const number = document.createElement('span');
-    number.className = 'num';
+    const number = document.createElement("span");
+
+    number.className = "num";
     number.textContent = d;
 
-    const weekday = document.createElement('small');
-    weekday.textContent = date.toLocaleDateString('en-US',{
-      weekday:'short'
+    const weekday = document.createElement("small");
+
+    weekday.textContent = date.toLocaleDateString("en-US",{
+      weekday:"short"
     });
 
-    const label = document.createElement('small');
+    const label = document.createElement("small");
 
     label.textContent = !isOpen
-      ? '✧ sealed'
+      ? "✧ sealed"
       : entry
-        ? '✦ ' + day.label
-        : 'awaiting letter';
+        ? "✦ " + day.label
+        : "awaiting letter";
 
     button.append(number,weekday,label);
+
     button.disabled = !isOpen;
 
-    button.addEventListener('click',()=>{
+    button.addEventListener("click",()=>{
       showEntry(date,entry);
     });
 
     grid.appendChild(button);
+
   }
+
 }
 
 /* LOAD PUBLISHED ENTRIES FROM SUPABASE */
@@ -1030,33 +1187,41 @@ function renderCalendar(){
 async function loadPublishedEntries(){
 
   const {data,error} = await client
-    .from('diary_entries')
-    .select('day_date,title,message,style,photo_url,is_published')
-    .eq('is_published',true);
+    .from("diary_entries")
+    .select("day_date,title,message,style,photo_url,is_published")
+    .eq("is_published",true);
 
   if(error){
 
-    console.error('Diary loading error:',error.message);
+    console.error(
+      "Diary loading error:",
+      error.message
+    );
 
-    document.getElementById('countdown').textContent =
-      'THE DIARY IS RESTING · PLEASE TRY AGAIN';
+    document.getElementById("countdown").textContent =
+      "THE DIARY IS RESTING · PLEASE TRY AGAIN";
 
     renderCalendar();
+
     return;
   }
 
-  Object.keys(entries).forEach(key=>delete entries[key]);
+  Object.keys(entries).forEach(key=>{
+    delete entries[key];
+  });
 
   (data||[]).forEach(entry=>{
     entries[entry.day_date] = entry;
   });
 
   renderCalendar();
+
 }
 
-/* START */
+/* START PROJECT 19 */
 
 updateCountdown();
+
 setInterval(updateCountdown,1000);
 
 loadPublishedEntries();
