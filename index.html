@@ -324,23 +324,46 @@ button{font:inherit}
 </style>
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 
+
 <script>
   window.OneSignalDeferred = window.OneSignalDeferred || [];
 
-  OneSignalDeferred.push(async function(OneSignal) {
+  OneSignalDeferred.push(async function (OneSignal) {
     await OneSignal.init({
-      appId: "b3dc12bc-130f-46fa-b4ac-982375ef5ca1"
+      appId: "b3dc12bc-130f-46fa-b4ac-982375ef5ca1",
+      serviceWorkerPath: "/Project-19/OneSignalSDKWorker.js",
+      serviceWorkerParam: {
+        scope: "/Project-19/"
+      }
     });
 
-    const button = document.getElementById('enableNotifications');
+    function attachNotificationButton() {
+      const button = document.getElementById("enableNotifications");
 
-    if (button) {
-      button.addEventListener('click', async function() {
-        await OneSignal.Notifications.requestPermission();
-      });
+      if (button) {
+        button.addEventListener("click", async function () {
+          try {
+            await OneSignal.Notifications.requestPermission();
+            console.log("Notification permission:", Notification.permission);
+          } catch (error) {
+            console.error("Notification error:", error);
+          }
+        });
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener(
+        "DOMContentLoaded",
+        attachNotificationButton,
+        { once: true }
+      );
+    } else {
+      attachNotificationButton();
     }
   });
 </script>
+
 </head>
 
 <body>
