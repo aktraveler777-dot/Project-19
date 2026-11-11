@@ -179,8 +179,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
     </div>
   </section>
 
-  <!-- NEW: NOTIFICATION PANEL -->
-
   <section class="panel">
     <h2>4. Send a notification ✦</h2>
 
@@ -191,20 +189,12 @@ button:disabled{opacity:.5;cursor:not-allowed}
     <div class="fields">
       <div class="field wide">
         <label for="notifyTitle">Notification title</label>
-        <input
-          id="notifyTitle"
-          maxlength="100"
-          placeholder="A little surprise ✦"
-        >
+        <input id="notifyTitle" maxlength="100" placeholder="A little surprise ✦">
       </div>
 
       <div class="field wide">
         <label for="notifyBody">Your message</label>
-        <textarea
-          id="notifyBody"
-          maxlength="500"
-          placeholder="Write your little surprise..."
-        ></textarea>
+        <textarea id="notifyBody" maxlength="500" placeholder="Write your little surprise..."></textarea>
       </div>
     </div>
 
@@ -230,8 +220,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
 const SUPABASE_URL = 'https://atmrgumbcdoegenrezql.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_QUxaD1xaSYOgFakhyhJuQQ_ECZaf1nx';
 
-const ADMIN_EMAIL = 'ladugadukaju@gmail.com';
-
 const client = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
@@ -245,7 +233,7 @@ let currentUser = null;
 
 const day = $('day');
 
-// Create the November diary dates.
+// CREATE NOVEMBER DIARY DATES
 
 for(let d=5; d<=19; d++){
   const option=document.createElement('option');
@@ -436,14 +424,11 @@ async function saveEntry(publishPage){
   }
 }
 
-// CREATOR LOGIN
+// LOGIN: ANY AUTHENTICATED ACCOUNT
 
 async function activateCreator(user){
-  if(!user || user.email?.toLowerCase()!==ADMIN_EMAIL){
-    await client.auth.signOut();
-    currentUser=null;
-    $('creatorArea').hidden=true;
-    $('authStatus').textContent='This account is not authorised to access the Creator’s Desk.';
+  if(!user){
+    $('authStatus').textContent='Please sign in.';
     return;
   }
 
@@ -477,11 +462,6 @@ $('login').onclick=async()=>{
     });
 
     if(error)throw error;
-
-    if(data.user?.email?.toLowerCase()!==ADMIN_EMAIL){
-      await client.auth.signOut();
-      throw new Error('This account is not authorised.');
-    }
 
     await activateCreator(data.user);
 
@@ -631,7 +611,7 @@ $('importFile').onchange=async()=>{
   $('importFile').value='';
 };
 
-// NEW: SEND PROJECT 19 NOTIFICATION
+// SEND PROJECT 19 NOTIFICATION
 
 $('sendNotification').onclick=async()=>{
   const title=$('notifyTitle').value.trim();
@@ -640,8 +620,8 @@ $('sendNotification').onclick=async()=>{
   const button=$('sendNotification');
   const status=$('notifyStatus');
 
-  if(!currentUser || currentUser.email?.toLowerCase()!==ADMIN_EMAIL){
-    status.textContent='Please sign in with your authorised creator account.';
+  if(!currentUser){
+    status.textContent='Please sign in first.';
     return;
   }
 
