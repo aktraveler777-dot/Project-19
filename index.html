@@ -323,12 +323,22 @@ button{font:inherit}
 }
 </style>
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+
 <script>
   window.OneSignalDeferred = window.OneSignalDeferred || [];
+
   OneSignalDeferred.push(async function(OneSignal) {
     await OneSignal.init({
-      appId: "b3dc12bc-130f-46fa-b4ac-982375ef5ca1",
+      appId: "b3dc12bc-130f-46fa-b4ac-982375ef5ca1"
     });
+
+    const button = document.getElementById('enableNotifications');
+
+    if (button) {
+      button.addEventListener('click', async function() {
+        await OneSignal.Notifications.requestPermission();
+      });
+    }
   });
 </script>
 </head>
@@ -352,6 +362,20 @@ button{font:inherit}
   <div class="countdown" id="countdown">
     <div class="counter-unit">Loading...</div>
   </div>
+  
+<button id="enableNotifications" type="button" style="
+  display:block;
+  margin:20px auto;
+  padding:12px 20px;
+  background:#b88b55;
+  color:#fff8e9;
+  border:1px solid #e2c797;
+  border-radius:6px;
+  font:15px Georgia,serif;
+  cursor:pointer;
+">
+  ✦ Enable Surprise Notifications
+</button>
 </header>
 
 <section aria-label="November birthday countdown calendar">
