@@ -1,0 +1,123 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: linear-gradient(145deg, #fcecf3, #eee8ff, #fff4e9);
+  font-family: 'DM Sans', sans-serif;
+  color: #694b62;
+  overflow: hidden;
+}
+
+.welcome {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  padding: 48px 28px 32px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 32px;
+  box-shadow: 0 20px 60px rgba(133, 92, 139, 0.14);
+  animation: appear 1s ease both;
+}
+
+.sparkle {
+  color: #c69acb;
+  font-size: 28px;
+  margin-bottom: 24px;
+  letter-spacing: 12px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #b58aa7;
+  margin-bottom: 16px;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 8vw, 39px);
+  line-height: 1.2;
+  color: #79566f;
+  margin-bottom: 18px;
+}
+
+.intro {
+  max-width: 290px;
+  margin: 0 auto;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #967b91;
+}
+
+.target {
+  font-size: 82px;
+  margin: 28px 0;
+  animation: float 3s ease-in-out infinite;
+  filter: drop-shadow(0 8px 12px rgba(190, 140, 170, 0.2));
+}
+
+button {
+  border: none;
+  padding: 16px 38px;
+  border-radius: 50px;
+  background: linear-gradient(120deg, #d9a9c9, #b9a7e7);
+  color: white;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(174, 132, 187, 0.25);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(174, 132, 187, 0.35);
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+.footer {
+  margin-top: 30px;
+  font-size: 11px;
+  color: #bd9bb4;
+  letter-spacing: 1px;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 400px) {
+  .welcome {
+    padding: 38px 20px 28px;
+  }
+}
