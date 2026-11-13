@@ -165,3 +165,112 @@ button:active {
   padding: 12px 26px;
   font-size: 13px;
 }
+/* NEW ARCHERY GAME UI */
+
+.game-screen {
+  max-width: 620px;
+}
+
+.game-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.love-banner {
+  color: #c16d98;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 7vw, 46px);
+  font-weight: bold;
+  min-height: 55px;
+  text-shadow: 0 3px 15px rgba(220, 140, 180, 0.25);
+  transition: transform 0.25s ease;
+}
+
+.love-banner.pop {
+  transform: scale(1.12);
+}
+
+.score-board {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 9px 22px;
+  border-radius: 30px;
+  background: #fff0f6;
+  color: #a96e91;
+  border: 1px solid #f2d5e4;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.game-instruction {
+  color: #967b91;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 12px auto;
+  max-width: 340px;
+}
+
+.game-area {
+  width: 100%;
+  margin: 20px auto 12px;
+  overflow: hidden;
+  border: 2px solid #f0dce9;
+  border-radius: 22px;
+  background: #fff6fb;
+  box-shadow: 0 10px 30px rgba(180, 130, 170, 0.12);
+  touch-action: none;
+}
+
+#archeryCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.game-status {
+  min-height: 24px;
+  margin: 12px 0;
+  color: #a477a0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.game-again {
+  margin-top: 8px;
+  padding: 12px 26px;
+  font-size: 13px;
+}
+
+.surprise-screen {
+  text-align: center;
+  animation: surpriseAppear 0.8s ease both;
+}
+
+.surprise-heart {
+  font-size: 65px;
+  margin: 15px;
+  animation: heartBeat 1.2s infinite;
+}
+
+.surprise-note {
+  padding: 22px;
+  border-radius: 20px;
+  background: #fff1f7;
+  color: #98718c;
+  line-height: 1.8;
+  margin-top: 20px;
+}
+
+@keyframes surpriseAppear {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.13); }
+}
