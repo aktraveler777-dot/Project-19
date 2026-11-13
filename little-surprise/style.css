@@ -121,3 +121,47 @@ button:active {
     padding: 38px 20px 28px;
   }
 }
+
+/* ARCHERY GAME */
+
+.game-screen {
+  max-width: 560px;
+}
+
+.game-area {
+  width: 100%;
+  margin: 25px auto 15px;
+  overflow: hidden;
+  border: 2px solid #f0dce9;
+  border-radius: 22px;
+  background: linear-gradient(160deg, #fff6fb, #eee9ff);
+  touch-action: none;
+}
+
+#archeryCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.game-instruction {
+  color: #967b91;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.game-status {
+  min-height: 24px;
+  margin-top: 12px;
+  color: #a477a0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.game-again {
+  margin-top: 12px;
+  padding: 12px 26px;
+  font-size: 13px;
+}
