@@ -67,7 +67,7 @@ function setupArchery() {
   };
 
   const giftLink =
-    "https://heyzine.com/flip-book/911b35be6c.html#page/24";
+    "https://online.fliphtml5.com/hdqyut/xiih/#p=1";
 
   let score = 0;
   let aiming = false;
