@@ -66,6 +66,9 @@ function setupArchery() {
     radius: 49
   };
 
+  const giftLink =
+    "https://heyzine.com/flip-book/911b35be6c.html#page/24";
+
   let score = 0;
   let aiming = false;
   let pointer = { x: bow.x, y: bow.y };
@@ -80,11 +83,11 @@ function setupArchery() {
 
   let particles = [];
   let popupTimer = null;
+  let surpriseTimer = null;
 
   const gravity = 160;
   const powerMultiplier = 5.1;
 
-  // Convert pointer coordinates to canvas coordinates.
   function position(event) {
     const rect = canvas.getBoundingClientRect();
 
@@ -94,7 +97,6 @@ function setupArchery() {
     };
   }
 
-  // Background.
   function drawBackground() {
     const gradient = ctx.createLinearGradient(0, 0, W, H);
 
@@ -104,7 +106,6 @@ function setupArchery() {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, W, H);
 
-    // Clouds.
     ctx.fillStyle = "rgba(255,255,255,0.6)";
 
     for (let i = 0; i < 5; i++) {
@@ -118,27 +119,23 @@ function setupArchery() {
       ctx.fill();
     }
 
-    // Ground.
     ctx.fillStyle = "#e7d5e5";
     ctx.fillRect(0, 350, W, 40);
 
-    // Flowers.
     ctx.font = "23px serif";
+    ctx.fillStyle = "#bd91b3";
 
     ctx.fillText("✿", 28, 340);
     ctx.fillText("✿", 220, 340);
     ctx.fillText("✿", 400, 340);
     ctx.fillText("✿", 590, 340);
 
-    ctx.fillStyle = "#bd91b3";
     ctx.font = "19px serif";
-
     ctx.fillText("✧", 280, 115);
     ctx.fillText("♡", 465, 75);
     ctx.fillText("✧", 600, 260);
   }
 
-  // Target.
   function drawTarget() {
     ctx.save();
 
@@ -178,7 +175,6 @@ function setupArchery() {
     ctx.restore();
   }
 
-  // Magical heart launcher.
   function drawBow() {
     ctx.save();
 
@@ -200,7 +196,6 @@ function setupArchery() {
 
     ctx.fillText("♡", bow.x, bow.y);
 
-    // A little glowing ring while aiming.
     if (aiming) {
       ctx.strokeStyle = "rgba(215,126,174,0.5)";
       ctx.lineWidth = 3;
@@ -213,7 +208,6 @@ function setupArchery() {
     ctx.restore();
   }
 
-  // Draw the magical heart projectile.
   function drawArrow(x, y) {
     ctx.save();
 
@@ -230,7 +224,6 @@ function setupArchery() {
     ctx.restore();
   }
 
-  // Aim indicator.
   function drawAimLine() {
     if (!aiming) return;
 
@@ -261,7 +254,6 @@ function setupArchery() {
     ctx.restore();
   }
 
-  // Celebration particles.
   function drawParticles() {
     particles.forEach(p => {
       ctx.globalAlpha = Math.max(0, p.life);
@@ -274,7 +266,6 @@ function setupArchery() {
     ctx.globalAlpha = 1;
   }
 
-  // Draw everything.
   function draw() {
     drawBackground();
     drawTarget();
@@ -292,7 +283,6 @@ function setupArchery() {
     drawParticles();
   }
 
-  // Create celebration.
   function createCelebration() {
     const symbols = ["♡", "✧", "✿", "✨"];
 
@@ -324,7 +314,6 @@ function setupArchery() {
     particles = particles.filter(p => p.life > 0);
   }
 
-  // Birthday popup on every successful hit.
   function showBirthdayPopup() {
     const area = document.querySelector(".game-area");
 
@@ -345,7 +334,6 @@ function setupArchery() {
     }, 1450);
   }
 
-  // Launch the magical heart in the drag direction.
   function launchArrow() {
     const dx = pointer.x - bow.x;
     const dy = pointer.y - bow.y;
@@ -379,7 +367,6 @@ function setupArchery() {
     animationId = requestAnimationFrame(animate);
   }
 
-  // Projectile animation.
   function animate(time) {
     if (!shooting || gameOver) return;
 
@@ -426,7 +413,6 @@ function setupArchery() {
     animationId = requestAnimationFrame(animate);
   }
 
-  // Celebration animation.
   function animateCelebration(startTime) {
     function frame(now) {
       if (now - startTime >= 900) {
@@ -445,7 +431,6 @@ function setupArchery() {
     celebrationId = requestAnimationFrame(frame);
   }
 
-  // Successful hit.
   function registerHit() {
     shooting = false;
     arrow = null;
@@ -466,8 +451,6 @@ function setupArchery() {
     createCelebration();
     draw();
 
-    status.textContent = "HAPPY BIRTHDAY! ♡";
-
     animateCelebration(performance.now());
 
     if (score >= 19) {
@@ -475,8 +458,7 @@ function setupArchery() {
 
       status.textContent = "19 perfect hits! You did it! ♡";
 
-      // Allow the final birthday popup to disappear first.
-      setTimeout(showSurprise, 1500);
+      surpriseTimer = setTimeout(showSurprise, 1500);
 
       return;
     }
@@ -484,7 +466,7 @@ function setupArchery() {
     status.textContent = "BULLSEYE! Another one! ♡";
   }
 
-  // Final gift reveal.
+  // FINAL BIRTHDAY GIFT SCREEN
   function showSurprise() {
     const welcome = document.querySelector(".welcome");
 
@@ -493,51 +475,43 @@ function setupArchery() {
 
       <div class="surprise-screen">
 
-        <p class="eyebrow">A SPECIAL LITTLE MOMENT</p>
+        <p class="eyebrow">A LITTLE SURPRISE FOR YOU</p>
 
         <h1>19 out of 19! ♡</h1>
 
-        <div class="surprise-heart" id="giftBox">
-          🎁
-        </div>
+        <div class="surprise-heart">🎁</div>
 
         <h2>Happy Birthday! ♡</h2>
 
         <p class="intro">
-          Nineteen little celebrations,
-          and one very special surprise.
+          You made it through all 19!
+          And now, something special is waiting for you.
         </p>
 
-        <button class="game-again" id="openGift">
-          Open your gift ♡
-        </button>
+        <a
+          href="${giftLink}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="game-again gift-link"
+          style="
+            display: inline-block;
+            text-decoration: none;
+            cursor: pointer;
+          "
+        >
+          Open Your Final Surprise ♡
+        </a>
 
-        <div id="giftMessage"></div>
+        <p class="footer">
+          Made with lots of love ✨
+        </p>
 
       </div>
     `;
 
     welcome.classList.add("game-screen");
-
-    document.getElementById("openGift").addEventListener("click", () => {
-      const giftMessage = document.getElementById("giftMessage");
-
-      giftMessage.innerHTML = `
-        <div class="surprise-note">
-
-          Your photograph and your letter
-          are waiting here.
-
-          <br><br>
-
-          <strong>Made just for you ♡</strong>
-
-        </div>
-      `;
-    });
   }
 
-  // Reset everything.
   function resetGame() {
     if (animationId) {
       cancelAnimationFrame(animationId);
@@ -552,6 +526,11 @@ function setupArchery() {
     if (popupTimer) {
       clearTimeout(popupTimer);
       popupTimer = null;
+    }
+
+    if (surpriseTimer) {
+      clearTimeout(surpriseTimer);
+      surpriseTimer = null;
     }
 
     document.querySelectorAll(".birthday-popup").forEach(p => p.remove());
@@ -577,7 +556,6 @@ function setupArchery() {
     draw();
   }
 
-  // Start aiming.
   canvas.addEventListener("pointerdown", event => {
     if (shooting || gameOver) return;
 
@@ -600,7 +578,6 @@ function setupArchery() {
     draw();
   });
 
-  // Follow the finger.
   canvas.addEventListener("pointermove", event => {
     if (!aiming) return;
 
@@ -609,7 +586,6 @@ function setupArchery() {
     draw();
   });
 
-  // Release to launch.
   canvas.addEventListener("pointerup", () => {
     if (!aiming) return;
 
